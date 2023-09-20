@@ -7,9 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateQuestionPageComponent } from './components/create-question-page/create-question-page.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { SingleChoiceQuestionFormComponent } from './components/single-choice-question-form/single-choice-question-form.component';
 import { QuestionDirective } from './core/directives/question.directive';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +22,7 @@ import { QuestionDirective } from './core/directives/question.directive';
     CreateQuestionPageComponent,
     SingleChoiceQuestionFormComponent,
     QuestionDirective,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +31,10 @@ import { QuestionDirective } from './core/directives/question.directive';
     MatCardModule,
     MatRadioModule,
     FormsModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
