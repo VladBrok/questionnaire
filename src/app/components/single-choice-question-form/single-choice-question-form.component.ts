@@ -10,6 +10,7 @@ export class SingleChoiceQuestionFormComponent {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     questionText: [null, Validators.compose([Validators.required])],
+    answerOptionIdx: [0],
     options: this.fb.array(
       [],
       Validators.compose([
