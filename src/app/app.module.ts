@@ -22,6 +22,7 @@ import { FormOptionsComponent } from './components/form-options/form-options.com
 import { MultipleChoicesFormComponent } from './components/multiple-choices-form/multiple-choices-form.component';
 import { OpenQuestionFormComponent } from './components/open-question-form/open-question-form.component';
 import { ManageQuestionsPageComponent } from './components/manage-questions-page/manage-questions-page.component';
+import { EditQuestionPageComponent } from './components/edit-question-page/edit-question-page.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ManageQuestionsPageComponent } from './components/manage-questions-page
     MultipleChoicesFormComponent,
     OpenQuestionFormComponent,
     ManageQuestionsPageComponent,
+    EditQuestionPageComponent,
   ],
   imports: [
     BrowserModule,

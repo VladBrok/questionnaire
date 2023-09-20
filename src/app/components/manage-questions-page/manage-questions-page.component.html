@@ -35,9 +35,14 @@
                 {{ getQuestionTypeLabel(question) | lowercase }}
               </div>
             </div>
-            <button mat-icon-button title="Edit the question" color="primary">
+            <a
+              mat-icon-button
+              title="Edit the question"
+              color="primary"
+              [routerLink]="['/edit', question.id]"
+            >
               <mat-icon>edit</mat-icon>
-            </button>
+            </a>
             <button
               mat-icon-button
               title="Delete the question"

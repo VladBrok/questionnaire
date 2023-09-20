@@ -19,6 +19,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./core/modules/manage/manage.module').then((m) => m.ManageModule),
   },
+  {
+    path: 'edit/:id',
+    loadChildren: () =>
+      import('./core/modules/edit-question/edit-question.module').then(
+        (m) => m.EditQuestionModule
+      ),
+  },
 ];
 
 @NgModule({
