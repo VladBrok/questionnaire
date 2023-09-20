@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { OpenQuestion } from '../../core/models/OpenQuestion';
 import { Router } from '@angular/router';
+import { QuestionToAdd } from '../../core/models/QuestionToAdd';
 
 @Component({
   selector: 'app-open-question-form',
@@ -25,11 +26,10 @@ export class OpenQuestionFormComponent {
       return;
     }
 
-    const question: Omit<OpenQuestion, 'id'> = {
+    const question: QuestionToAdd<OpenQuestion> = {
       text: this.form.value.questionText || '',
       type: 'OPEN',
       answer: '',
-      isAnswered: false,
     };
 
     this.questionService.add(question);

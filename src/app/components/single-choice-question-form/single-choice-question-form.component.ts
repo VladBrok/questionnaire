@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { SingleChoiceQuestion } from '../../core/models/SingleChoiceQuestion';
 import { Router } from '@angular/router';
+import { QuestionToAdd } from '../../core/models/QuestionToAdd';
 
 @Component({
   selector: 'app-single-choice-question-form',
@@ -49,12 +50,11 @@ export class SingleChoiceQuestionFormComponent {
       return;
     }
 
-    const question: Omit<SingleChoiceQuestion, 'id'> = {
+    const question: QuestionToAdd<SingleChoiceQuestion> = {
       text: this.form.value.questionText || '',
       type: 'SINGLE_CHOICE',
       options: (this.form.value.options as string[]) || [],
       answerOptionIdx: this.form.value.answerOptionIdx || 0,
-      isAnswered: false,
     };
 
     this.questionService.add(question);

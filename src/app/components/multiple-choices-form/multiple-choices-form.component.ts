@@ -10,6 +10,7 @@ import {
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { MultipleChoicesQuestion } from '../../core/models/MultipleChoicesQuestion';
 import { Router } from '@angular/router';
+import { QuestionToAdd } from '../../core/models/QuestionToAdd';
 
 @Component({
   selector: 'app-multiple-choices-form',
@@ -70,12 +71,11 @@ export class MultipleChoicesFormComponent {
       return;
     }
 
-    const question: Omit<MultipleChoicesQuestion, 'id'> = {
+    const question: QuestionToAdd<MultipleChoicesQuestion> = {
       text: this.form.value.questionText || '',
       type: 'MULTIPLE_CHOICES',
       options: (this.form.value.options as string[]) || [],
       answers: (this.form.value.answers as boolean[]) || [],
-      isAnswered: false,
     };
 
     this.questionService.add(question);

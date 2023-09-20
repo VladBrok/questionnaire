@@ -5,4 +5,5 @@ export interface Question {
   text: string;
   type: keyof typeof QUESTION_TYPE;
   isAnswered: boolean;
+  createdAt: string;
 }
