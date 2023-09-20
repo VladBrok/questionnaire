@@ -1,0 +1,29 @@
+.options {
+  margin-bottom: 15px;
+}
+
+.list {
+}
+
+.list-item {
+  border: 1px solid black;
+  border-bottom: none;
+}
+
+.list-item:last-child {
+  border-bottom: 1px solid black;
+}
+
+.list-item-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.question-info {
+}
+
+.question-options {
+  display: flex;
+  align-items: center;
+}

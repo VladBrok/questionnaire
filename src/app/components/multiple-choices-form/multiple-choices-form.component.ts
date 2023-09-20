@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { MultipleChoicesQuestion } from '../../core/models/MultipleChoicesQuestion';
+import { Router } from '@angular/router';
+import { QuestionToAdd } from '../../core/models/QuestionToAdd';
 
 @Component({
   selector: 'app-multiple-choices-form',
@@ -31,7 +33,10 @@ export class MultipleChoicesFormComponent {
   });
   isShowErrors = false;
 
-  constructor(private readonly questionService: QuestionService) {}
+  constructor(
+    private readonly questionService: QuestionService,
+    private readonly router: Router
+  ) {}
 
   answersValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -66,7 +71,7 @@ export class MultipleChoicesFormComponent {
       return;
     }
 
-    const question: Omit<MultipleChoicesQuestion, 'id'> = {
+    const question: QuestionToAdd<MultipleChoicesQuestion> = {
       text: this.form.value.questionText || '',
       type: 'MULTIPLE_CHOICES',
       options: (this.form.value.options as string[]) || [],
@@ -74,5 +79,6 @@ export class MultipleChoicesFormComponent {
     };
 
     this.questionService.add(question);
+    this.router.navigate(['/manage']);
   }
 }
