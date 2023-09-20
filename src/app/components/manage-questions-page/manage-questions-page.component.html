@@ -21,19 +21,28 @@
         class="list-item"
       >
         <div class="list-item-content">
-          <div class="question-info">
-            <div>
+          <div>
+            <div class="text" [title]="question.text">
               {{ question.text }}
             </div>
           </div>
           <div class="question-options">
-            <button mat-icon-button title="Edit the question">
+            <div class="question-info">
+              <div class="mat-small date">
+                {{ question.createdAt | date : "short" }}
+              </div>
+              <div class="mat-body">
+                {{ getQuestionTypeLabel(question) | lowercase }}
+              </div>
+            </div>
+            <button mat-icon-button title="Edit the question" color="primary">
               <mat-icon>edit</mat-icon>
             </button>
             <button
               mat-icon-button
               title="Delete the question"
               (click)="onDelete(question.id)"
+              color="warn"
             >
               <mat-icon>delete</mat-icon>
             </button>

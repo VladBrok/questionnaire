@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { Question } from '../../core/models/Question';
+import { QUESTION_TYPE } from '../../core/config/QuestionType';
 
 // TODO: add removal animations
 // TODO: trim input spaces on all forms
@@ -26,5 +27,9 @@ export class ManageQuestionsPageComponent implements OnInit {
 
   initQuestions() {
     this.questions = this.questionService.getAll();
+  }
+
+  getQuestionTypeLabel(question: Question) {
+    return QUESTION_TYPE[question.type].label;
   }
 }
