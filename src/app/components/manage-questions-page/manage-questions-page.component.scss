@@ -3,6 +3,8 @@
 }
 
 .list {
+  max-width: 100%;
+  --mdc-list-list-item-one-line-container-height: 60px;
 }
 
 .list-item {
@@ -20,10 +22,31 @@
   justify-content: space-between;
 }
 
-.question-info {
-}
-
 .question-options {
   display: flex;
   align-items: center;
+}
+
+.question-info {
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.date {
+  opacity: 0.8;
+}
+
+.text {
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 600px) {
+  .text {
+    max-width: 300px;
+  }
 }

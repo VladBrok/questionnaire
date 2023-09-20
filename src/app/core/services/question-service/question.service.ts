@@ -26,7 +26,10 @@ export class QuestionService {
     const questions: Question[] =
       this.localStorageService.getItem('questions') || [];
 
-    return questions;
+    return questions.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
   }
 
   remove(id: number) {
