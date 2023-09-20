@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { MultipleChoicesQuestion } from '../../core/models/MultipleChoicesQuestion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-multiple-choices-form',
@@ -31,7 +32,10 @@ export class MultipleChoicesFormComponent {
   });
   isShowErrors = false;
 
-  constructor(private readonly questionService: QuestionService) {}
+  constructor(
+    private readonly questionService: QuestionService,
+    private readonly router: Router
+  ) {}
 
   answersValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -71,8 +75,10 @@ export class MultipleChoicesFormComponent {
       type: 'MULTIPLE_CHOICES',
       options: (this.form.value.options as string[]) || [],
       answers: (this.form.value.answers as boolean[]) || [],
+      isAnswered: false,
     };
 
     this.questionService.add(question);
+    this.router.navigate(['/manage']);
   }
 }

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { SingleChoiceQuestion } from '../../core/models/SingleChoiceQuestion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-single-choice-question-form',
@@ -24,7 +25,10 @@ export class SingleChoiceQuestionFormComponent {
   });
   isShowErrors = false;
 
-  constructor(private readonly questionService: QuestionService) {}
+  constructor(
+    private readonly questionService: QuestionService,
+    private readonly router: Router
+  ) {}
 
   private get options() {
     return this.form.get('options') as FormArray;
@@ -50,8 +54,10 @@ export class SingleChoiceQuestionFormComponent {
       type: 'SINGLE_CHOICE',
       options: (this.form.value.options as string[]) || [],
       answerOptionIdx: this.form.value.answerOptionIdx || 0,
+      isAnswered: false,
     };
 
     this.questionService.add(question);
+    this.router.navigate(['/manage']);
   }
 }
