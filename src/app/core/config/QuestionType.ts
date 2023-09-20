@@ -1,7 +1,7 @@
 import { MultipleChoicesFormComponent } from '../../components/multiple-choices-form/multiple-choices-form.component';
+import { OpenQuestionFormComponent } from '../../components/open-question-form/open-question-form.component';
 import { SingleChoiceQuestionFormComponent } from '../../components/single-choice-question-form/single-choice-question-form.component';
 
-// TODO: set different components
 export const QUESTION_TYPE = {
   SINGLE_CHOICE: {
     id: 'SINGLE_CHOICE',
@@ -16,7 +16,7 @@ export const QUESTION_TYPE = {
   OPEN: {
     id: 'OPEN',
     label: 'Open',
-    formComponent: SingleChoiceQuestionFormComponent,
+    formComponent: OpenQuestionFormComponent,
   },
 } as const;
 

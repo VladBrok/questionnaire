@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FormOptionsComponent } from './components/form-options/form-options.component';
 import { MultipleChoicesFormComponent } from './components/multiple-choices-form/multiple-choices-form.component';
+import { OpenQuestionFormComponent } from './components/open-question-form/open-question-form.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MultipleChoicesFormComponent } from './components/multiple-choices-form
     LayoutComponent,
     FormOptionsComponent,
     MultipleChoicesFormComponent,
+    OpenQuestionFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Question text"
+      formControlName="questionText"
+      type="text"
+    />
+    <mat-error *ngIf="form.controls.questionText.hasError('required')">
+      Question text is required
+    </mat-error>
+  </mat-form-field>
+
+  <app-form-options></app-form-options>
+</form>
