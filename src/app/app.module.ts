@@ -15,6 +15,7 @@ import { QuestionDirective } from './core/directives/question.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutComponent } from './components/layout/layout.component';
+import { FormOptionsComponent } from './components/form-options/form-options.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { LayoutComponent } from './components/layout/layout.component';
     SingleChoiceQuestionFormComponent,
     QuestionDirective,
     LayoutComponent,
+    FormOptionsComponent,
   ],
   imports: [
     BrowserModule,
