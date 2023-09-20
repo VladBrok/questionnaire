@@ -14,6 +14,8 @@ import { SingleChoiceQuestionFormComponent } from './components/single-choice-qu
 import { QuestionDirective } from './core/directives/question.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FormOptionsComponent } from './components/form-options/form-options.component';
@@ -35,6 +37,8 @@ import { ManageQuestionsPageComponent } from './components/manage-questions-page
   ],
   imports: [
     BrowserModule,
+    MatListModule,
+    MatIconModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,

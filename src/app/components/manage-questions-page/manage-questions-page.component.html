@@ -1,1 +1,45 @@
-<p>manage-questions-page works!</p>
+<div class="container">
+  <h1 class="mat-headline-2 title">Question management</h1>
+  <div class="options">
+    <a
+      mat-raised-button
+      color="primary"
+      title="Create a new question"
+      [routerLink]="['/create']"
+    >
+      Create
+    </a>
+  </div>
+
+  <div *ngIf="!questions.length; else list">No questions found.</div>
+
+  <ng-template #list>
+    <mat-list role="list" class="list">
+      <mat-list-item
+        *ngFor="let question of questions"
+        role="listitem"
+        class="list-item"
+      >
+        <div class="list-item-content">
+          <div class="question-info">
+            <div>
+              {{ question.text }}
+            </div>
+          </div>
+          <div class="question-options">
+            <button mat-icon-button title="Edit the question">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              title="Delete the question"
+              (click)="onDelete(question.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </ng-template>
+</div>

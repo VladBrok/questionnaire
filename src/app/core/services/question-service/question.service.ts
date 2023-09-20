@@ -19,7 +19,7 @@ export class QuestionService {
       createdAt: new Date().toISOString(),
       ...question,
     });
-    this.localStorageService.setItem('questions', questions);
+    this.save(questions);
   }
 
   getAll() {
@@ -27,5 +27,15 @@ export class QuestionService {
       this.localStorageService.getItem('questions') || [];
 
     return questions;
+  }
+
+  remove(id: number) {
+    const questions = this.getAll();
+    const removed = questions.filter((x) => x.id !== id);
+    this.save(removed);
+  }
+
+  private save(questions: Question[]) {
+    this.localStorageService.setItem('questions', questions);
   }
 }
