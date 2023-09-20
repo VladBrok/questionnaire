@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { QuestionService } from '../../core/services/question-service/question.service';
+import { SingleChoiceQuestion } from '../../core/models/SingleChoiceQuestion';
 
 @Component({
   selector: 'app-single-choice-question-form',
@@ -22,6 +24,8 @@ export class SingleChoiceQuestionFormComponent {
   });
   isShowErrors = false;
 
+  constructor(private readonly questionService: QuestionService) {}
+
   private get options() {
     return this.form.get('options') as FormArray;
   }
@@ -41,6 +45,13 @@ export class SingleChoiceQuestionFormComponent {
       return;
     }
 
-    console.log('SingleChoiceQuestionFormComponent.onSubmit', this.form.value);
+    const question: Omit<SingleChoiceQuestion, 'id'> = {
+      text: this.form.value.questionText || '',
+      type: 'SINGLE_CHOICE',
+      options: (this.form.value.options as string[]) || [],
+      answerOptionIdx: this.form.value.answerOptionIdx || 0,
+    };
+
+    this.questionService.add(question);
   }
 }
