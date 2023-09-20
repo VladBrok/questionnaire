@@ -1,0 +1,79 @@
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Question text"
+      formControlName="questionText"
+      type="text"
+    />
+    <mat-error *ngIf="form.controls.questionText.hasError('required')">
+      Question text is required
+    </mat-error>
+  </mat-form-field>
+
+  <div class="add-option-button">
+    <button
+      mat-stroked-button
+      type="button"
+      color="primary"
+      (click)="addOption()"
+    >
+      Add option
+    </button>
+  </div>
+
+  <div
+    formArrayName="options"
+    *ngFor="let option of form.controls.options.controls; index as i"
+  >
+    <mat-form-field>
+      <input matInput placeholder="Option" [formControlName]="i" />
+      <mat-error *ngIf="option.hasError('required')">
+        Option is required
+      </mat-error>
+    </mat-form-field>
+    <button
+      mat-stroked-button
+      type="button"
+      color="warn"
+      class="delete-button"
+      (click)="deleteOption(i)"
+    >
+      Delete
+    </button>
+  </div>
+
+  <div *ngIf="isShowErrors" class="option-errors">
+    <mat-error *ngIf="form.controls.options.hasError('maxlength')">
+      At most five options are allowed
+    </mat-error>
+
+    <mat-error *ngIf="form.controls.options.hasError('minlength')">
+      At least two answer options are required
+    </mat-error>
+
+    <mat-error *ngIf="form.controls.options.hasError('required')">
+      Answer options are required
+    </mat-error>
+  </div>
+
+  <div *ngIf="form.controls.options.valid">
+    <p class="mat-headline-5">Select answers:</p>
+    <div
+      formArrayName="answers"
+      *ngFor="let answerIdx of form.controls.answers.controls; index as i"
+    >
+      <mat-checkbox [formControlName]="i">
+        {{ form.value.options?.[i] }}
+      </mat-checkbox>
+    </div>
+
+    <div *ngIf="isShowErrors" class="option-errors">
+      <mat-error *ngIf="form.controls.answers.hasError('answerNotSelected')">
+        At least one answer should be selected
+      </mat-error>
+    </div>
+  </div>
+
+  <app-form-options></app-form-options>
+</form>

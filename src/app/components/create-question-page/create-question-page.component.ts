@@ -34,7 +34,7 @@ export class CreateQuestionPageComponent implements OnInit {
       return;
     }
 
-    viewContainerRef.createComponent(formComponent);
+    viewContainerRef.createComponent(formComponent as any);
   }
 
   ngOnInit(): void {
