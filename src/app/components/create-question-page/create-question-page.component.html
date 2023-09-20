@@ -1,0 +1,18 @@
+<div>
+  <h1 class="mat-headline-2">Create a question</h1>
+  <div>
+    <label id="question-type" class="mat-subtitle-1"
+      >Select a question type:</label
+    >
+    <mat-radio-group
+      aria-labelledby="question-type"
+      class="radio-group-container"
+      [(ngModel)]="selectedTypeId"
+    >
+      <mat-radio-button *ngFor="let type of types" [value]="type.id">
+        {{ type.label }}
+      </mat-radio-button>
+    </mat-radio-group>
+    <div>Selected type id: {{ selectedTypeId }}</div>
+  </div>
+</div>
