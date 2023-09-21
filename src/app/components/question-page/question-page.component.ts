@@ -3,6 +3,7 @@ import { QUESTION_TYPES } from '../../core/config/QuestionType';
 import { QuestionDirective } from '../../core/directives/question.directive';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionService } from '../../core/services/question-service/question.service';
+import { QuestionForm } from '../../core/models/QuestionForm';
 
 @Component({
   selector: 'app-question-page',
@@ -46,8 +47,9 @@ export class QuestionPageComponent implements OnInit {
       return;
     }
 
-    const componentRef = viewContainerRef.createComponent(formComponent as any);
-    (componentRef.instance as any).id = this.id;
+    const componentRef =
+      viewContainerRef.createComponent<QuestionForm>(formComponent);
+    componentRef.instance.id = this.id;
   }
 
   ngOnInit(): void {

@@ -3,14 +3,15 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { SingleChoiceQuestion } from '../../core/models/SingleChoiceQuestion';
 import { Router } from '@angular/router';
-import { QuestionToAdd } from '../../core/models/QuestionToAdd';
+import { QuestionPatch } from '../../core/models/QuestionPatch';
+import { QuestionForm } from '../../core/models/QuestionForm';
 
 @Component({
   selector: 'app-single-choice-question-form',
   templateUrl: './single-choice-question-form.component.html',
   styleUrls: ['./single-choice-question-form.component.scss'],
 })
-export class SingleChoiceQuestionFormComponent implements OnInit {
+export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     questionText: [null, Validators.compose([Validators.required])],
@@ -78,14 +79,19 @@ export class SingleChoiceQuestionFormComponent implements OnInit {
       return;
     }
 
-    const question: QuestionToAdd<SingleChoiceQuestion> = {
+    const question: QuestionPatch<SingleChoiceQuestion> = {
       text: this.form.value.questionText || '',
       type: 'SINGLE_CHOICE',
       options: (this.form.value.options as string[]) || [],
       answerOptionIdx: this.form.value.answerOptionIdx || 0,
     };
 
-    this.questionService.add(question);
+    if (this.id == null) {
+      this.questionService.add(question);
+    } else {
+      this.questionService.update(this.id, question);
+    }
+
     this.router.navigate(['/manage']);
   }
 }

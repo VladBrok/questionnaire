@@ -1,6 +1,6 @@
 import { Question } from './Question';
 
-export type QuestionToAdd<T extends Question> = Omit<
+export type QuestionPatch<T extends Question> = Omit<
   T,
   'id' | 'isAnswered' | 'createdAt'
 >;

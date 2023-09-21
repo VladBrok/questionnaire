@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Question } from '../../models/Question';
-import { QuestionToAdd } from '../../models/QuestionToAdd';
+import { QuestionPatch } from '../../models/QuestionPatch';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { QuestionToAdd } from '../../models/QuestionToAdd';
 export class QuestionService {
   constructor(private readonly localStorageService: LocalStorageService) {}
 
-  add<T extends Question>(question: QuestionToAdd<T>) {
+  add<T extends Question>(question: QuestionPatch<T>) {
     const questions = this.getAll();
     const ids = questions.length ? questions.map((x) => x.id) : [0];
     const id = Math.max(...ids) + 1;
@@ -19,6 +19,18 @@ export class QuestionService {
       createdAt: new Date().toISOString(),
       ...question,
     });
+    this.save(questions);
+  }
+
+  update<T extends Question>(id: number, data: QuestionPatch<T>) {
+    const questions = this.getAll();
+    const idx = questions.findIndex((x) => x.id === id);
+
+    if (idx < 0) {
+      return;
+    }
+
+    questions[idx] = { ...questions[idx], ...data };
     this.save(questions);
   }
 
