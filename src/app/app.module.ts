@@ -10,7 +10,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { SingleChoiceQuestionFormComponent } from './components/single-choice-question-form/single-choice-question-form.component';
+import { SingleChoiceQuestionFormComponent } from './components/questions/forms/single-choice-question-form/single-choice-question-form.component';
 import { QuestionDirective } from './core/directives/question.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -20,13 +20,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FormOptionsComponent } from './components/form-options/form-options.component';
-import { MultipleChoicesFormComponent } from './components/multiple-choices-form/multiple-choices-form.component';
-import { OpenQuestionFormComponent } from './components/open-question-form/open-question-form.component';
+import { MultipleChoicesFormComponent } from './components/questions/forms/multiple-choices-form/multiple-choices-form.component';
+import { OpenQuestionFormComponent } from './components/questions/forms/open-question-form/open-question-form.component';
 import { ManageQuestionsPageComponent } from './components/manage-questions-page/manage-questions-page.component';
 import { QuestionListsPageComponent } from './components/question-lists-page/question-lists-page.component';
-import { SingleChoiceQuestionCardComponent } from './components/single-choice-question-card/single-choice-question-card.component';
-import { MultipleChoiceQuestionCardComponent } from './components/multiple-choice-question-card/multiple-choice-question-card.component';
-import { OpenQuestionCardComponent } from './components/open-question-card/open-question-card.component';
+import { SingleChoiceQuestionCardComponent } from './components/questions/cards/single-choice-question-card/single-choice-question-card.component';
+import { MultipleChoiceQuestionCardComponent } from './components/questions/cards/multiple-choice-question-card/multiple-choice-question-card.component';
+import { OpenQuestionCardComponent } from './components/questions/cards/open-question-card/open-question-card.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({

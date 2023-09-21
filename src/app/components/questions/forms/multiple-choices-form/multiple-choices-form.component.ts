@@ -7,11 +7,11 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { QuestionService } from '../../core/services/question-service/question.service';
-import { MultipleChoicesQuestion } from '../../core/models/MultipleChoicesQuestion';
+import { QuestionService } from '../../../../core/services/question-service/question.service';
+import { MultipleChoicesQuestion } from '../../../../core/models/MultipleChoicesQuestion';
 import { Router } from '@angular/router';
-import { QuestionPatch } from '../../core/models/QuestionPatch';
-import { QuestionForm } from '../../core/models/QuestionForm';
+import { QuestionPatch } from '../../../../core/models/QuestionPatch';
+import { QuestionForm } from '../../../../core/models/QuestionForm';
 
 @Component({
   selector: 'app-multiple-choices-form',

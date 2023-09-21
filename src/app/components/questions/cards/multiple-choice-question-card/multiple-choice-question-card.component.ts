@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MultipleChoicesQuestion } from '../../core/models/MultipleChoicesQuestion';
-import { QuestionService } from '../../core/services/question-service/question.service';
-import { QuestionCard } from '../../core/models/QuestionCard';
+import { MultipleChoicesQuestion } from '../../../../core/models/MultipleChoicesQuestion';
+import { QuestionService } from '../../../../core/services/question-service/question.service';
+import { QuestionCard } from '../../../../core/models/QuestionCard';
 
 @Component({
   selector: 'app-multiple-choice-question-card',

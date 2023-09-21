@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { QuestionService } from '../../core/services/question-service/question.service';
-import { OpenQuestion } from '../../core/models/OpenQuestion';
+import { QuestionService } from '../../../../core/services/question-service/question.service';
+import { OpenQuestion } from '../../../../core/models/OpenQuestion';
 
 @Component({
   selector: 'app-open-question-card',
