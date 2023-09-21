@@ -1,5 +1,5 @@
 import { ErrorHandler } from '@angular/core';
-import { LocalStorageWriteError } from './core/errors/LocalStorageWriteError';
+import { LocalStorageWriteError } from './LocalStorageWriteError';
 
 export class GlobalErrorHandler implements ErrorHandler {
   handleError(error: any) {
