@@ -1,16 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { SingleChoiceQuestion } from '../../core/models/SingleChoiceQuestion';
 import { Router } from '@angular/router';
-import { QuestionToAdd } from '../../core/models/QuestionToAdd';
+import { QuestionPatch } from '../../core/models/QuestionPatch';
+import { QuestionForm } from '../../core/models/QuestionForm';
 
 @Component({
   selector: 'app-single-choice-question-form',
   templateUrl: './single-choice-question-form.component.html',
   styleUrls: ['./single-choice-question-form.component.scss'],
 })
-export class SingleChoiceQuestionFormComponent {
+export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     questionText: [null, Validators.compose([Validators.required])],
@@ -26,6 +27,8 @@ export class SingleChoiceQuestionFormComponent {
   });
   isShowErrors = false;
 
+  @Input() id?: number;
+
   constructor(
     private readonly questionService: QuestionService,
     private readonly router: Router
@@ -35,8 +38,35 @@ export class SingleChoiceQuestionFormComponent {
     return this.form.get('options') as FormArray;
   }
 
-  addOption(): void {
-    this.options.push(this.fb.control('', Validators.required));
+  ngOnInit(): void {
+    this.prefillForm();
+  }
+
+  private prefillForm() {
+    if (this.id == null) {
+      return;
+    }
+
+    const question = this.questionService.getSingle(
+      this.id,
+      'SINGLE_CHOICE'
+    ) as SingleChoiceQuestion;
+
+    if (!question) {
+      return;
+    }
+
+    this.form.patchValue({
+      questionText: question.text as any,
+      answerOptionIdx: question.answerOptionIdx,
+    });
+    for (const option of question.options) {
+      this.addOption(option);
+    }
+  }
+
+  addOption(text?: string): void {
+    this.options.push(this.fb.control(text || '', Validators.required));
   }
 
   deleteOption(index: number): void {
@@ -50,14 +80,19 @@ export class SingleChoiceQuestionFormComponent {
       return;
     }
 
-    const question: QuestionToAdd<SingleChoiceQuestion> = {
+    const question: QuestionPatch<SingleChoiceQuestion> = {
       text: this.form.value.questionText || '',
       type: 'SINGLE_CHOICE',
       options: (this.form.value.options as string[]) || [],
       answerOptionIdx: this.form.value.answerOptionIdx || 0,
     };
 
-    this.questionService.add(question);
+    if (this.id == null) {
+      this.questionService.add(question);
+    } else {
+      this.questionService.update(this.id, question);
+    }
+
     this.router.navigate(['/manage']);
   }
 }

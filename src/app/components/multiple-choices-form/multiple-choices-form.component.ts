@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -10,14 +10,15 @@ import {
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { MultipleChoicesQuestion } from '../../core/models/MultipleChoicesQuestion';
 import { Router } from '@angular/router';
-import { QuestionToAdd } from '../../core/models/QuestionToAdd';
+import { QuestionPatch } from '../../core/models/QuestionPatch';
+import { QuestionForm } from '../../core/models/QuestionForm';
 
 @Component({
   selector: 'app-multiple-choices-form',
   templateUrl: './multiple-choices-form.component.html',
   styleUrls: ['./multiple-choices-form.component.scss'],
 })
-export class MultipleChoicesFormComponent {
+export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     questionText: [null, Validators.compose([Validators.required])],
@@ -33,10 +34,38 @@ export class MultipleChoicesFormComponent {
   });
   isShowErrors = false;
 
+  @Input() id?: number;
+
   constructor(
     private readonly questionService: QuestionService,
     private readonly router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.prefillForm();
+  }
+
+  private prefillForm() {
+    if (this.id == null) {
+      return;
+    }
+
+    const question = this.questionService.getSingle(
+      this.id,
+      'MULTIPLE_CHOICES'
+    ) as MultipleChoicesQuestion;
+
+    if (!question) {
+      return;
+    }
+
+    this.form.patchValue({
+      questionText: question.text as any,
+    });
+    for (let i = 0; i < question.options.length; i++) {
+      this.addOption(question.options[i], question.answers[i]);
+    }
+  }
 
   answersValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -54,9 +83,9 @@ export class MultipleChoicesFormComponent {
     return this.form.get('answers') as FormArray;
   }
 
-  addOption(): void {
-    this.options.push(this.fb.control('', Validators.required));
-    this.answers.push(this.fb.control(false));
+  addOption(option?: string, answer?: boolean): void {
+    this.options.push(this.fb.control(option || '', Validators.required));
+    this.answers.push(this.fb.control(answer || false));
   }
 
   deleteOption(index: number): void {
@@ -71,14 +100,19 @@ export class MultipleChoicesFormComponent {
       return;
     }
 
-    const question: QuestionToAdd<MultipleChoicesQuestion> = {
+    const question: QuestionPatch<MultipleChoicesQuestion> = {
       text: this.form.value.questionText || '',
       type: 'MULTIPLE_CHOICES',
       options: (this.form.value.options as string[]) || [],
       answers: (this.form.value.answers as boolean[]) || [],
     };
 
-    this.questionService.add(question);
+    if (this.id == null) {
+      this.questionService.add(question);
+    } else {
+      this.questionService.update(this.id, question);
+    }
+
     this.router.navigate(['/manage']);
   }
 }
