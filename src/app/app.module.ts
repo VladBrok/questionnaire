@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +28,7 @@ import { SingleChoiceQuestionCardComponent } from './components/questions/cards/
 import { MultipleChoiceQuestionCardComponent } from './components/questions/cards/multiple-choice-question-card/multiple-choice-question-card.component';
 import { OpenQuestionCardComponent } from './components/questions/cards/open-question-card/open-question-card.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { GlobalErrorHandler } from './GlobalErrorHandler';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatInputModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

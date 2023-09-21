@@ -3,6 +3,7 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Question } from '../../models/Question';
 import { QuestionPatch } from '../../models/QuestionPatch';
 import { QUESTION_TYPE } from '../../config/QuestionType';
+import { LocalStorageWriteError } from '../../errors/LocalStorageWriteError';
 
 @Injectable({
   providedIn: 'root',
@@ -80,6 +81,10 @@ export class QuestionService {
   }
 
   private save(questions: Question[]) {
-    this.localStorageService.setItem('questions', questions);
+    try {
+      this.localStorageService.setItem('questions', questions);
+    } catch {
+      throw new LocalStorageWriteError();
+    }
   }
 }
