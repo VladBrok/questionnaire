@@ -6,14 +6,17 @@
   <ng-template #lists>
     <div class="column-container">
       <section class="column" aria-labelledby="unanswered">
-        <h2 id="unanswered" class="mat-headline-4">Unanswered</h2>
-        <div *ngFor="let unanswered of unansweredQuestions">
+        <h2 id="unanswered" class="mat-headline-4 title">Unanswered</h2>
+        <div
+          class="card-wrapper"
+          *ngFor="let unanswered of unansweredQuestions"
+        >
           <ng-template appQuestion> </ng-template>
         </div>
       </section>
       <section class="column" aria-labelledby="answered">
-        <h2 id="answered" class="mat-headline-4">Answered</h2>
-        <div *ngFor="let answered of answeredQuestions">
+        <h2 id="answered" class="mat-headline-4 title">Answered</h2>
+        <div class="card-wrapper" *ngFor="let answered of answeredQuestions">
           <ng-template appQuestion> </ng-template>
         </div>
       </section>

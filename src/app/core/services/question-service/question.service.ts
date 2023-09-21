@@ -23,7 +23,7 @@ export class QuestionService {
     this.save(questions);
   }
 
-  update<T extends Question>(id: number, data: QuestionPatch<T>) {
+  update<T extends Question>(id: number, data: Partial<T>) {
     const questions = this.getAll();
     const idx = questions.findIndex((x) => x.id === id);
 

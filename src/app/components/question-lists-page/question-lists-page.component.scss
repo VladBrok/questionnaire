@@ -1,5 +1,15 @@
+.title {
+  text-align: center;
+}
+
 .column-container {
   display: flex;
+}
+
+.column {
+  --column-padding: 25px;
+  padding: 0 var(--column-padding);
+  width: calc(var(--question-card-width) + var(--column-padding) * 2);
 }
 
 .column:first-child {
@@ -10,4 +20,8 @@
 .mat-typography .mat-headline-4 {
   margin: 0;
   margin-bottom: 15px;
+}
+
+.card-wrapper {
+  margin-bottom: 20px;
 }

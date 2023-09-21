@@ -1,6 +1,6 @@
 import {
-  AfterContentInit,
   Component,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChildren,
@@ -10,21 +10,31 @@ import { Question } from '../../core/models/Question';
 import { QuestionDirective } from '../../core/directives/question.directive';
 import { QUESTION_TYPES } from '../../core/config/QuestionType';
 import { QuestionCard } from '../../core/models/QuestionCard';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-question-lists-page',
   templateUrl: './question-lists-page.component.html',
   styleUrls: ['./question-lists-page.component.scss'],
 })
-export class QuestionListsPageComponent implements OnInit {
+export class QuestionListsPageComponent implements OnInit, OnDestroy {
   questions: Question[] = [];
   types = QUESTION_TYPES;
+  private readonly subscription = new Subscription();
 
   constructor(private readonly questionService: QuestionService) {}
 
   @ViewChildren(QuestionDirective) questionCards!: QueryList<QuestionDirective>;
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private init() {
     this.initQuestions();
     setTimeout(() => {
       this.loadCardComponents();
@@ -63,6 +73,12 @@ export class QuestionListsPageComponent implements OnInit {
       const componentRef =
         viewContainerRef.createComponent<QuestionCard>(cardComponent);
       componentRef.instance.id = question.id;
+      // TODO: this is bad:
+      // we are subscribing to the child's `change` event and when it's fired, rerendering everything to display updated questions
+      // because child updates `question` using `questionService` which uses `localStorage` but we don't know about that and still have old questions.
+      // NgRx should be used instead of this `change` event.
+      const sub = componentRef.instance.change.subscribe(() => this.init());
+      this.subscription.add(sub);
     });
   }
 
