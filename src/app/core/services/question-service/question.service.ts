@@ -39,7 +39,7 @@ export class QuestionService {
     const questions: Question[] =
       this.localStorageService.getItem('questions') || [];
 
-    return this.sort(questions, 'createdAt').sort();
+    return this.sort(questions, 'createdAt');
   }
 
   sort(
