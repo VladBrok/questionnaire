@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FormOptionsComponent } from './components/form-options/form-options.component';
@@ -26,8 +27,7 @@ import { QuestionListsPageComponent } from './components/question-lists-page/que
 import { SingleChoiceQuestionCardComponent } from './components/single-choice-question-card/single-choice-question-card.component';
 import { MultipleChoiceQuestionCardComponent } from './components/multiple-choice-question-card/multiple-choice-question-card.component';
 import { OpenQuestionCardComponent } from './components/open-question-card/open-question-card.component';
-
-// TODO: add app navigation with "Lists" and "Manage"
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -44,10 +44,12 @@ import { OpenQuestionCardComponent } from './components/open-question-card/open-
     SingleChoiceQuestionCardComponent,
     MultipleChoiceQuestionCardComponent,
     OpenQuestionCardComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     MatListModule,
+    MatToolbarModule,
     MatIconModule,
     AppRoutingModule,
     BrowserAnimationsModule,
