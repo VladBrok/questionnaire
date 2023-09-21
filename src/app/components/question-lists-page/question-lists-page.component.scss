@@ -1,0 +1,13 @@
+.column-container {
+  display: flex;
+}
+
+.column:first-child {
+  border-right: 1px solid black;
+}
+
+.column-container::ng-deep .mat-headline-4,
+.mat-typography .mat-headline-4 {
+  margin: 0;
+  margin-bottom: 15px;
+}
