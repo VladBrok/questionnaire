@@ -1,0 +1,35 @@
+<div [class.mat-elevation-z3]="true">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title class="title">{{ question?.text }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-radio-group
+        [(ngModel)]="answerIdx"
+        class="radio-group-container"
+        [disabled]="question?.isAnswered || false"
+      >
+        <mat-radio-button
+          *ngFor="let option of question?.options; index as i"
+          [value]="i"
+        >
+          {{ option }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="question?.isAnswered; else unanswered">
+      <button mat-stroked-button color="warn" (click)="onRollback()">
+        Rollback
+      </button>
+    </mat-card-actions>
+    <ng-template #unanswered>
+      <mat-card-actions *ngIf="isAnswerValid">
+        <button mat-raised-button color="primary" (click)="onAnswer()">
+          Answer
+        </button>
+      </mat-card-actions>
+    </ng-template>
+  </mat-card>
+</div>

@@ -22,6 +22,12 @@ import { FormOptionsComponent } from './components/form-options/form-options.com
 import { MultipleChoicesFormComponent } from './components/multiple-choices-form/multiple-choices-form.component';
 import { OpenQuestionFormComponent } from './components/open-question-form/open-question-form.component';
 import { ManageQuestionsPageComponent } from './components/manage-questions-page/manage-questions-page.component';
+import { QuestionListsPageComponent } from './components/question-lists-page/question-lists-page.component';
+import { SingleChoiceQuestionCardComponent } from './components/single-choice-question-card/single-choice-question-card.component';
+import { MultipleChoiceQuestionCardComponent } from './components/multiple-choice-question-card/multiple-choice-question-card.component';
+import { OpenQuestionCardComponent } from './components/open-question-card/open-question-card.component';
+
+// TODO: add app navigation with "Lists" and "Manage"
 
 @NgModule({
   declarations: [
@@ -34,6 +40,10 @@ import { ManageQuestionsPageComponent } from './components/manage-questions-page
     MultipleChoicesFormComponent,
     OpenQuestionFormComponent,
     ManageQuestionsPageComponent,
+    QuestionListsPageComponent,
+    SingleChoiceQuestionCardComponent,
+    MultipleChoiceQuestionCardComponent,
+    OpenQuestionCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,8 +6,6 @@ import { Router } from '@angular/router';
 import { QuestionPatch } from '../../core/models/QuestionPatch';
 import { QuestionForm } from '../../core/models/QuestionForm';
 
-// TODO: extract duplicate logic in all forms that have `implements QuestionForm`
-
 @Component({
   selector: 'app-open-question-form',
   templateUrl: './open-question-form.component.html',

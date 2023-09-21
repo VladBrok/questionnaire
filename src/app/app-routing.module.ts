@@ -26,6 +26,13 @@ const routes: Routes = [
         (m) => m.QuestionModule
       ),
   },
+  {
+    path: 'lists',
+    loadChildren: () =>
+      import('./core/modules/question-lists/question-lists.module').then(
+        (m) => m.QuestionListsModule
+      ),
+  },
 ];
 
 @NgModule({

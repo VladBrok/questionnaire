@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 class="cdk-visually-hidden">Lists of questions</h1>
+
+  <div *ngIf="!questions.length; else lists">No questions found.</div>
+
+  <ng-template #lists>
+    <div class="column-container">
+      <section class="column" aria-labelledby="unanswered">
+        <h2 id="unanswered" class="mat-headline-4 title">Unanswered</h2>
+        <div
+          class="card-wrapper"
+          *ngFor="let unanswered of unansweredQuestions"
+        >
+          <ng-template appQuestion> </ng-template>
+        </div>
+      </section>
+      <section class="column" aria-labelledby="answered">
+        <h2 id="answered" class="mat-headline-4 title">Answered</h2>
+        <div class="card-wrapper" *ngFor="let answered of answeredQuestions">
+          <ng-template appQuestion> </ng-template>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,32 @@
+<div [class.mat-elevation-z3]="true">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title class="title">{{ question?.text }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-form-field>
+        <input
+          [disabled]="question?.isAnswered || false"
+          matInput
+          placeholder="Answer"
+          type="text"
+          [(ngModel)]="answer"
+        />
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="question?.isAnswered; else unanswered">
+      <button mat-stroked-button color="warn" (click)="onRollback()">
+        Rollback
+      </button>
+    </mat-card-actions>
+    <ng-template #unanswered>
+      <mat-card-actions *ngIf="isAnswerValid">
+        <button mat-raised-button color="primary" (click)="onAnswer()">
+          Answer
+        </button>
+      </mat-card-actions>
+    </ng-template>
+  </mat-card>
+</div>
