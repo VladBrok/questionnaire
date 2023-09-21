@@ -78,10 +78,6 @@ export class QuestionListsPageComponent implements OnInit, OnDestroy {
       const componentRef =
         viewContainerRef.createComponent<QuestionCard>(cardComponent);
       componentRef.instance.id = question.id;
-      // TODO: this is bad:
-      // we are subscribing to the child's `change` event and when it's fired, rerendering everything to display updated questions
-      // because child updates `question` using `questionService` which uses `localStorage` but we don't know about that and still have old questions.
-      // NgRx should be used instead of this `change` event.
       const sub = componentRef.instance.change.subscribe(() => {
         this.onChildChange();
       });
