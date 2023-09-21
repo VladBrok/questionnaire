@@ -7,7 +7,7 @@
 }
 
 .column {
-  --column-padding: 25px;
+  --column-padding: 35px;
   padding: 0 var(--column-padding);
   width: calc(var(--question-card-width) + var(--column-padding) * 2);
 }

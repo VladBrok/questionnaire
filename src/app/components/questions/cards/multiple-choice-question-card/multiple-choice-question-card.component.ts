@@ -18,10 +18,10 @@ export class MultipleChoiceQuestionCardComponent implements QuestionCard {
   constructor(private readonly questionService: QuestionService) {}
 
   ngOnInit(): void {
-    this.initQuestion();
+    this.loadQuestion();
   }
 
-  private initQuestion() {
+  private loadQuestion() {
     this.question = this.questionService.getSingle(
       this.id,
       'MULTIPLE_CHOICES'

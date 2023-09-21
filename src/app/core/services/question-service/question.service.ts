@@ -39,7 +39,7 @@ export class QuestionService {
     const questions: Question[] =
       this.localStorageService.getItem('questions') || [];
 
-    return this.sort(questions, 'createdAt').sort();
+    return this.sort(questions, 'createdAt');
   }
 
   sort(
@@ -62,8 +62,8 @@ export class QuestionService {
 
   remove(id: number) {
     const questions = this.getAll();
-    const removed = questions.filter((x) => x.id !== id);
-    this.save(removed);
+    const remaining = questions.filter((x) => x.id !== id);
+    this.save(remaining);
   }
 
   answer<T extends Question>(id: number, data?: Partial<T>) {

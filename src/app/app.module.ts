@@ -28,7 +28,7 @@ import { SingleChoiceQuestionCardComponent } from './components/questions/cards/
 import { MultipleChoiceQuestionCardComponent } from './components/questions/cards/multiple-choice-question-card/multiple-choice-question-card.component';
 import { OpenQuestionCardComponent } from './components/questions/cards/open-question-card/open-question-card.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { GlobalErrorHandler } from './GlobalErrorHandler';
+import { GlobalErrorHandler } from './core/errors/GlobalErrorHandler';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({

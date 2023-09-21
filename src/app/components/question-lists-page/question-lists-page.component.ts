@@ -27,42 +27,38 @@ export class QuestionListsPageComponent implements OnInit, OnDestroy {
   @ViewChildren(QuestionDirective) questionCards!: QueryList<QuestionDirective>;
 
   ngOnInit(): void {
-    this.init();
+    this.loadQuestions();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  private init() {
-    this.initQuestions();
+  private loadQuestions() {
+    this.questions = this.questionService.getAll();
     setTimeout(() => {
       this.loadCardComponents();
     });
-  }
-
-  initQuestions() {
-    this.questions = this.questionService.getAll();
   }
 
   loadCardComponents() {
     const answered = this.answeredQuestions;
     const unanswered = this.unansweredQuestions;
 
-    let realIndex = 0;
-    let realQuestions = unanswered;
+    let curIndex = 0;
+    let curQuestions = unanswered;
 
     for (let index = 0; index < this.questionCards?.length; index++) {
       const card = this.questionCards.get(index)!;
       const viewContainerRef = card.viewContainerRef;
       viewContainerRef.clear();
 
-      if (realIndex >= realQuestions.length) {
-        realQuestions = answered;
-        realIndex = 0;
+      if (curIndex >= curQuestions.length) {
+        curQuestions = answered;
+        curIndex = 0;
       }
-      const question = realQuestions[realIndex];
-      realIndex++;
+      const question = curQuestions[curIndex];
+      curIndex++;
 
       const cardComponent = this.types.find(
         (x) => x.id === question.type
@@ -88,7 +84,7 @@ export class QuestionListsPageComponent implements OnInit, OnDestroy {
   private onChildChange() {
     this.subscription.unsubscribe();
     this.subscription = new Subscription();
-    this.init();
+    this.loadQuestions();
   }
 
   get answeredQuestions() {

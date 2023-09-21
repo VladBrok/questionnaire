@@ -69,9 +69,8 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
 
   answersValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      return control.value.some((x: boolean) => x)
-        ? null
-        : { answerNotSelected: true };
+      const isSomeSelected = control.value.some((x: boolean) => x);
+      return isSomeSelected ? null : { answerNotSelected: true };
     };
   }
 
