@@ -9,7 +9,7 @@ import { QuestionService } from '../../core/services/question-service/question.s
   styleUrls: ['./single-choice-question-card.component.scss'],
 })
 export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
-  answerIdx = 0;
+  answerIdx?: number;
   question?: SingleChoiceQuestion;
 
   @Input() id!: number;
@@ -26,8 +26,14 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
       this.id,
       'SINGLE_CHOICE'
     ) as SingleChoiceQuestion;
+
     if (!this.question) {
       console.error(`question with id ${this.id} was not found`);
+      return;
+    }
+
+    if (this.question.isAnswered) {
+      this.answerIdx = this.question.answerOptionIdx;
     }
   }
 

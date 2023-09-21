@@ -24,6 +24,7 @@ import { OpenQuestionFormComponent } from './components/open-question-form/open-
 import { ManageQuestionsPageComponent } from './components/manage-questions-page/manage-questions-page.component';
 import { QuestionListsPageComponent } from './components/question-lists-page/question-lists-page.component';
 import { SingleChoiceQuestionCardComponent } from './components/single-choice-question-card/single-choice-question-card.component';
+import { MultipleChoiceQuestionCardComponent } from './components/multiple-choice-question-card/multiple-choice-question-card.component';
 
 // TODO: add app navigation with "Lists" and "Manage"
 
@@ -40,6 +41,7 @@ import { SingleChoiceQuestionCardComponent } from './components/single-choice-qu
     ManageQuestionsPageComponent,
     QuestionListsPageComponent,
     SingleChoiceQuestionCardComponent,
+    MultipleChoiceQuestionCardComponent,
   ],
   imports: [
     BrowserModule,
