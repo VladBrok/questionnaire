@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Question } from '../../models/Question';
 import { QuestionPatch } from '../../models/QuestionPatch';
+import { QUESTION_TYPE } from '../../config/QuestionType';
 
 @Injectable({
   providedIn: 'root',
@@ -44,9 +45,9 @@ export class QuestionService {
     );
   }
 
-  getSingle(id: number) {
+  getSingle(id: number, type?: keyof typeof QUESTION_TYPE) {
     const questions = this.getAll();
-    return questions.find((x) => x.id === id);
+    return questions.find((x) => x.id === id && (!type || x.type === type));
   }
 
   remove(id: number) {

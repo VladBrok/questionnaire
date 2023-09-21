@@ -51,7 +51,8 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
     }
 
     const question = this.questionService.getSingle(
-      this.id
+      this.id,
+      'MULTIPLE_CHOICES'
     ) as MultipleChoicesQuestion;
 
     if (!question) {

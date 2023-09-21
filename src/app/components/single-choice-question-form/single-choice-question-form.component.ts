@@ -48,7 +48,8 @@ export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
     }
 
     const question = this.questionService.getSingle(
-      this.id
+      this.id,
+      'SINGLE_CHOICE'
     ) as SingleChoiceQuestion;
 
     if (!question) {
