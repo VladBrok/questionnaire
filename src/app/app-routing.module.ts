@@ -10,8 +10,8 @@ const routes: Routes = [
   {
     path: 'create',
     loadChildren: () =>
-      import('./core/modules/create-question/create-question.module').then(
-        (m) => m.CreateQuestionModule
+      import('./core/modules/question/question.module').then(
+        (m) => m.QuestionModule
       ),
   },
   {
@@ -22,8 +22,8 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     loadChildren: () =>
-      import('./core/modules/edit-question/edit-question.module').then(
-        (m) => m.EditQuestionModule
+      import('./core/modules/question/question.module').then(
+        (m) => m.QuestionModule
       ),
   },
 ];

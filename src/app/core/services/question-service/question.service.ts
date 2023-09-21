@@ -32,6 +32,11 @@ export class QuestionService {
     );
   }
 
+  getSingle(id: number) {
+    const questions = this.getAll();
+    return questions.find((x) => x.id === id);
+  }
+
   remove(id: number) {
     const questions = this.getAll();
     const removed = questions.filter((x) => x.id !== id);

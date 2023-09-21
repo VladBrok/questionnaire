@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CreateQuestionPageComponent } from './components/create-question-page/create-question-page.component';
+import { QuestionPageComponent } from './components/question-page/question-page.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,12 +22,11 @@ import { FormOptionsComponent } from './components/form-options/form-options.com
 import { MultipleChoicesFormComponent } from './components/multiple-choices-form/multiple-choices-form.component';
 import { OpenQuestionFormComponent } from './components/open-question-form/open-question-form.component';
 import { ManageQuestionsPageComponent } from './components/manage-questions-page/manage-questions-page.component';
-import { EditQuestionPageComponent } from './components/edit-question-page/edit-question-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateQuestionPageComponent,
+    QuestionPageComponent,
     SingleChoiceQuestionFormComponent,
     QuestionDirective,
     LayoutComponent,
@@ -35,7 +34,6 @@ import { EditQuestionPageComponent } from './components/edit-question-page/edit-
     MultipleChoicesFormComponent,
     OpenQuestionFormComponent,
     ManageQuestionsPageComponent,
-    EditQuestionPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,7 @@
 <div class="container">
-  <h1 class="mat-headline-2 title">Create a question</h1>
+  <h1 class="mat-headline-2 title">{{ title }}</h1>
   <div class="container">
-    <label id="question-type" class="mat-headline-5"
-      >Select a question type:</label
-    >
+    <label id="question-type" class="mat-headline-5">Select a type:</label>
     <mat-radio-group
       aria-labelledby="question-type"
       class="radio-group-container"
@@ -15,7 +13,7 @@
       </mat-radio-button>
     </mat-radio-group>
 
-    <p class="mat-headline-5">Specify question info:</p>
+    <p class="mat-headline-5">Specify info:</p>
 
     <ng-template appQuestion> </ng-template>
   </div>
