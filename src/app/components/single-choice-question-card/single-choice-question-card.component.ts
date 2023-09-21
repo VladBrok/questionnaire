@@ -26,6 +26,9 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
       this.id,
       'SINGLE_CHOICE'
     ) as SingleChoiceQuestion;
+    if (!this.question) {
+      console.error(`question with id ${this.id} was not found`);
+    }
   }
 
   get isAnswerValid() {
@@ -42,7 +45,6 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
 
   private updateIsAnswered(isAnswered: boolean) {
     this.questionService.update(this.id, { isAnswered });
-    this.initQuestion();
     this.change.emit();
   }
 }

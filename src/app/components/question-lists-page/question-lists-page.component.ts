@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 export class QuestionListsPageComponent implements OnInit, OnDestroy {
   questions: Question[] = [];
   types = QUESTION_TYPES;
-  private readonly subscription = new Subscription();
+  private subscription = new Subscription();
 
   constructor(private readonly questionService: QuestionService) {}
 
@@ -49,15 +49,20 @@ export class QuestionListsPageComponent implements OnInit, OnDestroy {
     const answered = this.answeredQuestions;
     const unanswered = this.unansweredQuestions;
 
-    this.questionCards?.forEach((card, index) => {
+    let realIndex = 0;
+    let realQuestions = unanswered;
+
+    for (let index = 0; index < this.questionCards?.length; index++) {
+      const card = this.questionCards.get(index)!;
       const viewContainerRef = card.viewContainerRef;
       viewContainerRef.clear();
 
-      const adjustedIndex = index % unanswered.length;
-      const question =
-        index >= unanswered.length
-          ? answered[adjustedIndex]
-          : unanswered[index];
+      if (realIndex >= realQuestions.length) {
+        realQuestions = answered;
+        realIndex = 0;
+      }
+      const question = realQuestions[realIndex];
+      realIndex++;
 
       const cardComponent = this.types.find(
         (x) => x.id === question.type
@@ -77,9 +82,17 @@ export class QuestionListsPageComponent implements OnInit, OnDestroy {
       // we are subscribing to the child's `change` event and when it's fired, rerendering everything to display updated questions
       // because child updates `question` using `questionService` which uses `localStorage` but we don't know about that and still have old questions.
       // NgRx should be used instead of this `change` event.
-      const sub = componentRef.instance.change.subscribe(() => this.init());
+      const sub = componentRef.instance.change.subscribe(() => {
+        this.onChildChange();
+      });
       this.subscription.add(sub);
-    });
+    }
+  }
+
+  private onChildChange() {
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
+    this.init();
   }
 
   get answeredQuestions() {
