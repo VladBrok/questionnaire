@@ -3,9 +3,6 @@ import { QuestionService } from '../../core/services/question-service/question.s
 import { Question } from '../../core/models/Question';
 import { QUESTION_TYPE } from '../../core/config/QuestionType';
 
-// TODO: add removal animations
-// TODO: trim input spaces on all forms
-
 @Component({
   selector: 'app-manage-questions-page',
   templateUrl: './manage-questions-page.component.html',

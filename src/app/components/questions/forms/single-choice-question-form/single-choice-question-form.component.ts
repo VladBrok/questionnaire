@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { QuestionService } from '../../core/services/question-service/question.service';
-import { SingleChoiceQuestion } from '../../core/models/SingleChoiceQuestion';
+import { QuestionService } from '../../../../core/services/question-service/question.service';
+import { SingleChoiceQuestion } from '../../../../core/models/SingleChoiceQuestion';
 import { Router } from '@angular/router';
-import { QuestionPatch } from '../../core/models/QuestionPatch';
-import { QuestionForm } from '../../core/models/QuestionForm';
+import { QuestionPatch } from '../../../../core/models/QuestionPatch';
+import { QuestionForm } from '../../../../core/models/QuestionForm';
 
 @Component({
   selector: 'app-single-choice-question-form',

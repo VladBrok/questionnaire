@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { QuestionCard } from '../../core/models/QuestionCard';
-import { SingleChoiceQuestion } from '../../core/models/SingleChoiceQuestion';
-import { QuestionService } from '../../core/services/question-service/question.service';
+import { QuestionCard } from '../../../../core/models/QuestionCard';
+import { SingleChoiceQuestion } from '../../../../core/models/SingleChoiceQuestion';
+import { QuestionService } from '../../../../core/services/question-service/question.service';
 
 @Component({
   selector: 'app-single-choice-question-card',

@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { QuestionService } from '../../core/services/question-service/question.service';
-import { OpenQuestion } from '../../core/models/OpenQuestion';
+import { QuestionService } from '../../../../core/services/question-service/question.service';
+import { OpenQuestion } from '../../../../core/models/OpenQuestion';
 import { Router } from '@angular/router';
-import { QuestionPatch } from '../../core/models/QuestionPatch';
-import { QuestionForm } from '../../core/models/QuestionForm';
+import { QuestionPatch } from '../../../../core/models/QuestionPatch';
+import { QuestionForm } from '../../../../core/models/QuestionForm';
 
 @Component({
   selector: 'app-open-question-form',

@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.container::ng-deep .mat-headline-2,
+.mat-typography .mat-headline-2 {
+  margin: 0 0 20px;
+}

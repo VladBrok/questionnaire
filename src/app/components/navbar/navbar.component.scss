@@ -1,0 +1,14 @@
+.nav-active-item {
+  --mdc-outlined-button-outline-color: #fff;
+}
+
+.nav-items {
+  display: flex;
+  gap: 20px;
+  margin-left: 10px;
+}
+
+.nav-container {
+  position: fixed;
+  z-index: 999;
+}
