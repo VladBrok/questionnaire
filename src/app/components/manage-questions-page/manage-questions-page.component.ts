@@ -14,15 +14,15 @@ export class ManageQuestionsPageComponent implements OnInit {
   constructor(private readonly questionService: QuestionService) {}
 
   ngOnInit(): void {
-    this.initQuestions();
+    this.loadQuestions();
   }
 
   onDelete(id: number): void {
     this.questionService.remove(id);
-    this.initQuestions();
+    this.loadQuestions();
   }
 
-  initQuestions() {
+  private loadQuestions() {
     this.questions = this.questionService.getAll();
   }
 
