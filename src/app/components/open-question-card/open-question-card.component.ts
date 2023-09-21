@@ -1,0 +1,57 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { QuestionService } from '../../core/services/question-service/question.service';
+import { OpenQuestion } from '../../core/models/OpenQuestion';
+
+@Component({
+  selector: 'app-open-question-card',
+  templateUrl: './open-question-card.component.html',
+  styleUrls: ['./open-question-card.component.scss'],
+})
+export class OpenQuestionCardComponent {
+  answer = '';
+  question?: OpenQuestion;
+
+  @Input() id!: number;
+  @Output() change = new EventEmitter<void>();
+
+  constructor(private readonly questionService: QuestionService) {}
+
+  ngOnInit(): void {
+    this.initQuestion();
+  }
+
+  private initQuestion() {
+    this.question = this.questionService.getSingle(
+      this.id,
+      'OPEN'
+    ) as OpenQuestion;
+
+    if (!this.question) {
+      console.error(`question with id ${this.id} was not found`);
+      return;
+    }
+    if (this.question.isAnswered) {
+      this.answer = this.question.answer;
+    }
+  }
+
+  get isAnswerValid() {
+    return this.answer.length > 0 && this.answer.length <= 255;
+  }
+
+  onAnswer() {
+    this.updateIsAnswered(true);
+  }
+
+  onRollback() {
+    this.updateIsAnswered(false);
+  }
+
+  private updateIsAnswered(isAnswered: boolean) {
+    this.questionService.update<OpenQuestion>(this.id, {
+      isAnswered,
+      answer: isAnswered ? this.answer : '',
+    });
+    this.change.emit();
+  }
+}

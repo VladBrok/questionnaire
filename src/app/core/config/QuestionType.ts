@@ -1,10 +1,9 @@
 import { MultipleChoiceQuestionCardComponent } from '../../components/multiple-choice-question-card/multiple-choice-question-card.component';
 import { MultipleChoicesFormComponent } from '../../components/multiple-choices-form/multiple-choices-form.component';
+import { OpenQuestionCardComponent } from '../../components/open-question-card/open-question-card.component';
 import { OpenQuestionFormComponent } from '../../components/open-question-form/open-question-form.component';
 import { SingleChoiceQuestionCardComponent } from '../../components/single-choice-question-card/single-choice-question-card.component';
 import { SingleChoiceQuestionFormComponent } from '../../components/single-choice-question-form/single-choice-question-form.component';
-
-// TODO: set different card components
 
 export const QUESTION_TYPE = {
   SINGLE_CHOICE: {
@@ -23,7 +22,7 @@ export const QUESTION_TYPE = {
     id: 'OPEN',
     label: 'Open',
     formComponent: OpenQuestionFormComponent,
-    cardComponent: SingleChoiceQuestionCardComponent,
+    cardComponent: OpenQuestionCardComponent,
   },
 } as const;
 
