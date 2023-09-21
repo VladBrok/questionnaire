@@ -29,6 +29,7 @@ import { MultipleChoiceQuestionCardComponent } from './components/questions/card
 import { OpenQuestionCardComponent } from './components/questions/cards/open-question-card/open-question-card.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GlobalErrorHandler } from './GlobalErrorHandler';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { GlobalErrorHandler } from './GlobalErrorHandler';
     MultipleChoiceQuestionCardComponent,
     OpenQuestionCardComponent,
     NavbarComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

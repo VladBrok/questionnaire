@@ -33,6 +33,14 @@ const routes: Routes = [
         (m) => m.QuestionListsModule
       ),
   },
+  {
+    path: '404',
+    loadChildren: () =>
+      import('./core/modules/not-found/not-found.module').then(
+        (m) => m.NotFoundModule
+      ),
+  },
+  { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QUESTION_TYPES } from '../../core/config/QuestionType';
 import { QuestionDirective } from '../../core/directives/question.directive';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../../core/services/question-service/question.service';
 import { QuestionForm } from '../../core/models/QuestionForm';
 
@@ -20,6 +20,7 @@ export class QuestionPageComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly questionService: QuestionService
   ) {}
 
@@ -58,9 +59,10 @@ export class QuestionPageComponent implements OnInit {
 
     if (this.id != null) {
       const question = this.questionService.getSingle(this.id);
-      // TODO: if not found -> redirect to 404
       if (question) {
         this.selectedTypeId = question.type;
+      } else {
+        this.router.navigate(['404']);
       }
     }
 
