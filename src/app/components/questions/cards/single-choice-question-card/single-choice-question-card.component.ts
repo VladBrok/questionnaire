@@ -18,10 +18,10 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
   constructor(private readonly questionService: QuestionService) {}
 
   ngOnInit(): void {
-    this.initQuestion();
+    this.loadQuestion();
   }
 
-  private initQuestion() {
+  private loadQuestion() {
     this.question = this.questionService.getSingle(
       this.id,
       'SINGLE_CHOICE'

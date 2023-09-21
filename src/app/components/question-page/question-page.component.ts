@@ -59,6 +59,7 @@ export class QuestionPageComponent implements OnInit {
 
     if (this.id != null) {
       const question = this.questionService.getSingle(this.id);
+
       if (question) {
         this.selectedTypeId = question.type;
       } else {

@@ -17,10 +17,10 @@ export class OpenQuestionCardComponent {
   constructor(private readonly questionService: QuestionService) {}
 
   ngOnInit(): void {
-    this.initQuestion();
+    this.loadQuestion();
   }
 
-  private initQuestion() {
+  private loadQuestion() {
     this.question = this.questionService.getSingle(
       this.id,
       'OPEN'
@@ -30,6 +30,7 @@ export class OpenQuestionCardComponent {
       console.error(`question with id ${this.id} was not found`);
       return;
     }
+
     if (this.question.answeredAt) {
       this.answer = this.question.answer;
     }
