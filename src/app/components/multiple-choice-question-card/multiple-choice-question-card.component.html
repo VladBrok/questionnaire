@@ -8,7 +8,7 @@
       <div class="radio-group-container">
         <mat-checkbox
           *ngFor="let option of question?.options; index as i"
-          [disabled]="question?.isAnswered || false"
+          [disabled]="question?.answeredAt || false"
           [(ngModel)]="answers[i]"
         >
           {{ option }}
@@ -16,7 +16,7 @@
       </div>
     </mat-card-content>
 
-    <mat-card-actions *ngIf="question?.isAnswered; else unanswered">
+    <mat-card-actions *ngIf="question?.answeredAt; else unanswered">
       <button mat-stroked-button color="warn" (click)="onRollback()">
         Rollback
       </button>

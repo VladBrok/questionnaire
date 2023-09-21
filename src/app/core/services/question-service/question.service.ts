@@ -16,7 +16,6 @@ export class QuestionService {
     const id = Math.max(...ids) + 1;
     questions.push({
       id,
-      isAnswered: false,
       createdAt: new Date().toISOString(),
       ...question,
     });
@@ -39,10 +38,20 @@ export class QuestionService {
     const questions: Question[] =
       this.localStorageService.getItem('questions') || [];
 
-    return questions.sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    return this.sort(questions, 'createdAt').sort();
+  }
+
+  sort(
+    questions: Question[],
+    sortField: keyof Pick<Question, 'createdAt' | 'answeredAt'>
+  ) {
+    return questions
+      .slice()
+      .sort(
+        (a, b) =>
+          new Date(b[sortField] || '').getTime() -
+          new Date(a[sortField] || '').getTime()
+      );
   }
 
   getSingle(id: number, type?: keyof typeof QUESTION_TYPE) {
@@ -54,6 +63,20 @@ export class QuestionService {
     const questions = this.getAll();
     const removed = questions.filter((x) => x.id !== id);
     this.save(removed);
+  }
+
+  answer<T extends Question>(id: number, data?: Partial<T>) {
+    this.update(id, {
+      ...data,
+      answeredAt: new Date().toISOString(),
+    });
+  }
+
+  rollbackAnswer<T extends Question>(id: number, data?: Partial<T>) {
+    this.update(id, {
+      ...data,
+      answeredAt: undefined,
+    });
   }
 
   private save(questions: Question[]) {

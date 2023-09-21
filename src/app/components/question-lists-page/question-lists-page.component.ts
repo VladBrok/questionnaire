@@ -96,10 +96,16 @@ export class QuestionListsPageComponent implements OnInit, OnDestroy {
   }
 
   get answeredQuestions() {
-    return this.questions.filter((x) => x.isAnswered);
+    return this.questionService.sort(
+      this.questions.filter((x) => x.answeredAt),
+      'answeredAt'
+    );
   }
 
   get unansweredQuestions() {
-    return this.questions.filter((x) => !x.isAnswered);
+    return this.questionService.sort(
+      this.questions.filter((x) => !x.answeredAt),
+      'createdAt'
+    );
   }
 }

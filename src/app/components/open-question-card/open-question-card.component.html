@@ -7,7 +7,7 @@
     <mat-card-content>
       <mat-form-field>
         <input
-          [disabled]="question?.isAnswered || false"
+          [disabled]="question?.answeredAt || false"
           matInput
           placeholder="Answer"
           type="text"
@@ -16,7 +16,7 @@
       </mat-form-field>
     </mat-card-content>
 
-    <mat-card-actions *ngIf="question?.isAnswered; else unanswered">
+    <mat-card-actions *ngIf="question?.answeredAt; else unanswered">
       <button mat-stroked-button color="warn" (click)="onRollback()">
         Rollback
       </button>

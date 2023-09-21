@@ -32,7 +32,7 @@ export class MultipleChoiceQuestionCardComponent implements QuestionCard {
       return;
     }
 
-    if (this.question.isAnswered) {
+    if (this.question.answeredAt) {
       this.answers = this.question.answers.slice();
     } else {
       this.answers = Array(this.question.answers.length).fill(false);
@@ -55,7 +55,11 @@ export class MultipleChoiceQuestionCardComponent implements QuestionCard {
   }
 
   private updateIsAnswered(isAnswered: boolean) {
-    this.questionService.update(this.id, { isAnswered });
+    if (isAnswered) {
+      this.questionService.answer(this.id);
+    } else {
+      this.questionService.rollbackAnswer(this.id);
+    }
     this.change.emit();
   }
 }
