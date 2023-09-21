@@ -1,0 +1,53 @@
+[
+  {
+    "id": 5,
+    "isAnswered": true,
+    "createdAt": "2023-09-21T06:47:40.958Z",
+    "text": "dsfasfadsf",
+    "type": "OPEN",
+    "options": ["xx ?", "dsfa"],
+    "answerOptionIdx": 1,
+    "answer": ""
+  },
+  {
+    "id": 4,
+    "isAnswered": true,
+    "createdAt": "2023-09-21T06:31:27.849Z",
+    "text": "multiple EDITED",
+    "type": "MULTIPLE_CHOICES",
+    "options": ["edited", "x"],
+    "answers": [true, true]
+  },
+  {
+    "id": 3,
+    "isAnswered": false,
+    "createdAt": "2023-09-21T06:24:57.666Z",
+    "text": "how do you do?",
+    "type": "OPEN",
+    "options": ["x", "y"],
+    "answerOptionIdx": 1,
+    "answer": "fine",
+    "answeredAt": "2023-09-21T11:15:04.545Z"
+  },
+  {
+    "id": 2,
+    "isAnswered": false,
+    "createdAt": "2023-09-20T15:13:30.933Z",
+    "text": "open->single->multiple",
+    "type": "MULTIPLE_CHOICES",
+    "answer": "",
+    "options": ["x", "y", "z"],
+    "answerOptionIdx": 0,
+    "answers": [false, true, false]
+  },
+  {
+    "id": 1,
+    "isAnswered": false,
+    "createdAt": "2023-09-20T15:08:06.142Z",
+    "text": "sdfdsf  why dskfj dlfjd sfldjf dsf",
+    "type": "SINGLE_CHOICE",
+    "options": ["1", "2"],
+    "answerOptionIdx": 0,
+    "answeredAt": "2023-09-21T11:15:12.031Z"
+  }
+]
