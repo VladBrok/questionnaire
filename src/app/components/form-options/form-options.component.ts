@@ -1,5 +1,5 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-options',
@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./form-options.component.scss'],
 })
 export class FormOptionsComponent {
-  constructor(private readonly router: Router) {}
+  constructor(private readonly location: Location) {}
 
   onCancel() {
-    this.router.navigate(['/manage']);
+    this.location.back();
   }
 }

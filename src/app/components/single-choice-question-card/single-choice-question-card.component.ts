@@ -32,7 +32,7 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
       return;
     }
 
-    if (this.question.isAnswered) {
+    if (this.question.answeredAt) {
       this.answerIdx = this.question.answerOptionIdx;
     }
   }
@@ -50,7 +50,11 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
   }
 
   private updateIsAnswered(isAnswered: boolean) {
-    this.questionService.update(this.id, { isAnswered });
+    if (isAnswered) {
+      this.questionService.answer(this.id);
+    } else {
+      this.questionService.rollbackAnswer(this.id);
+    }
     this.change.emit();
   }
 }

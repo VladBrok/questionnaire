@@ -30,7 +30,7 @@ export class OpenQuestionCardComponent {
       console.error(`question with id ${this.id} was not found`);
       return;
     }
-    if (this.question.isAnswered) {
+    if (this.question.answeredAt) {
       this.answer = this.question.answer;
     }
   }
@@ -48,10 +48,15 @@ export class OpenQuestionCardComponent {
   }
 
   private updateIsAnswered(isAnswered: boolean) {
-    this.questionService.update<OpenQuestion>(this.id, {
-      isAnswered,
-      answer: isAnswered ? this.answer : '',
-    });
+    if (isAnswered) {
+      this.questionService.answer<OpenQuestion>(this.id, {
+        answer: this.answer,
+      });
+    } else {
+      this.questionService.rollbackAnswer<OpenQuestion>(this.id, {
+        answer: '',
+      });
+    }
     this.change.emit();
   }
 }
