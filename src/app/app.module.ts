@@ -30,6 +30,7 @@ import { OpenQuestionCardComponent } from './components/questions/cards/open-que
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GlobalErrorHandler } from './core/errors/GlobalErrorHandler';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { QuestionTextFieldComponent } from './components/question-text-field/question-text-field.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     OpenQuestionCardComponent,
     NavbarComponent,
     NotFoundComponent,
+    QuestionTextFieldComponent,
   ],
   imports: [
     BrowserModule,
