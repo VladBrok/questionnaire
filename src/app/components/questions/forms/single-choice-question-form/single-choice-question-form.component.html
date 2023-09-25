@@ -57,21 +57,5 @@
     </mat-error>
   </div>
 
-  <div *ngIf="form.controls.options.valid">
-    <label id="answer" class="mat-headline-5">Select an answer:</label>
-    <mat-radio-group
-      aria-labelledby="answer"
-      class="radio-group-container"
-      formControlName="answerOptionIdx"
-    >
-      <mat-radio-button
-        *ngFor="let option of form.value.options; index as i"
-        [value]="i"
-      >
-        {{ option }}
-      </mat-radio-button>
-    </mat-radio-group>
-  </div>
-
   <app-form-options></app-form-options>
 </form>

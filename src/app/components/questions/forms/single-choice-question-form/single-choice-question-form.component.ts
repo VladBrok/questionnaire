@@ -15,7 +15,6 @@ export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     questionText: [null, Validators.compose([Validators.required])],
-    answerOptionIdx: [0],
     options: this.fb.array(
       [],
       Validators.compose([
@@ -58,7 +57,6 @@ export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
 
     this.form.patchValue({
       questionText: question.text as any,
-      answerOptionIdx: question.answerOptionIdx,
     });
     for (const option of question.options) {
       this.addOption(option);
@@ -84,7 +82,6 @@ export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
       text: this.form.value.questionText || '',
       type: 'SINGLE_CHOICE',
       options: (this.form.value.options as string[]) || [],
-      answerOptionIdx: this.form.value.answerOptionIdx || 0,
     };
 
     if (this.id == null) {
