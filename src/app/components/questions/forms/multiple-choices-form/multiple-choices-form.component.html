@@ -1,15 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Question text"
-      formControlName="questionText"
-      type="text"
-    />
-    <mat-error *ngIf="form.controls.questionText.hasError('required')">
-      Question text is required
-    </mat-error>
-  </mat-form-field>
+  <app-question-text-field [form]="form"></app-question-text-field>
 
   <div class="add-option-button">
     <button
@@ -55,24 +45,6 @@
     <mat-error *ngIf="form.controls.options.hasError('required')">
       Answer options are required
     </mat-error>
-  </div>
-
-  <div *ngIf="form.controls.options.valid">
-    <p class="mat-headline-5">Select answers:</p>
-    <div
-      formArrayName="answers"
-      *ngFor="let answerIdx of form.controls.answers.controls; index as i"
-    >
-      <mat-checkbox [formControlName]="i">
-        {{ form.value.options?.[i] }}
-      </mat-checkbox>
-    </div>
-
-    <div *ngIf="isShowErrors" class="option-errors">
-      <mat-error *ngIf="form.controls.answers.hasError('answerNotSelected')">
-        At least one answer should be selected
-      </mat-error>
-    </div>
   </div>
 
   <app-form-options></app-form-options>

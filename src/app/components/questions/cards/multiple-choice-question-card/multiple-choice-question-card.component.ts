@@ -33,17 +33,10 @@ export class MultipleChoiceQuestionCardComponent implements QuestionCard {
     }
 
     if (this.question.answeredAt) {
-      this.answers = this.question.answers.slice();
+      this.answers = this.question.answers!.slice();
     } else {
-      this.answers = Array(this.question.answers.length).fill(false);
+      this.answers = Array(this.question.options.length).fill(false);
     }
-  }
-
-  get isAnswerValid() {
-    return (
-      this.answers.length === this.question?.answers.length &&
-      this.answers.every((answer, i) => answer === this.question?.answers[i])
-    );
   }
 
   onAnswer() {
@@ -54,11 +47,19 @@ export class MultipleChoiceQuestionCardComponent implements QuestionCard {
     this.updateIsAnswered(false);
   }
 
+  get isSomeAnswerSelected() {
+    return this.answers.some(Boolean);
+  }
+
   private updateIsAnswered(isAnswered: boolean) {
     if (isAnswered) {
-      this.questionService.answer(this.id);
+      this.questionService.answer<MultipleChoicesQuestion>(this.id, {
+        answers: this.answers,
+      });
     } else {
-      this.questionService.rollbackAnswer(this.id);
+      this.questionService.rollbackAnswer<MultipleChoicesQuestion>(this.id, {
+        answers: undefined,
+      });
     }
     this.change.emit();
   }

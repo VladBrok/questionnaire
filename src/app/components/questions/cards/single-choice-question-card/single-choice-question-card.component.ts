@@ -37,10 +37,6 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
     }
   }
 
-  get isAnswerValid() {
-    return this.answerIdx === this.question?.answerOptionIdx;
-  }
-
   onAnswer() {
     this.updateIsAnswered(true);
   }
@@ -51,9 +47,13 @@ export class SingleChoiceQuestionCardComponent implements QuestionCard, OnInit {
 
   private updateIsAnswered(isAnswered: boolean) {
     if (isAnswered) {
-      this.questionService.answer(this.id);
+      this.questionService.answer<SingleChoiceQuestion>(this.id, {
+        answerOptionIdx: this.answerIdx,
+      });
     } else {
-      this.questionService.rollbackAnswer(this.id);
+      this.questionService.rollbackAnswer<SingleChoiceQuestion>(this.id, {
+        answerOptionIdx: undefined,
+      });
     }
     this.change.emit();
   }

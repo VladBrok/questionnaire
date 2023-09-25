@@ -1,15 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Question text"
-      formControlName="questionText"
-      type="text"
-    />
-    <mat-error *ngIf="form.controls.questionText.hasError('required')">
-      Question text is required
-    </mat-error>
-  </mat-form-field>
+  <app-question-text-field [form]="form"></app-question-text-field>
 
   <div class="add-option-button">
     <button
@@ -55,22 +45,6 @@
     <mat-error *ngIf="form.controls.options.hasError('required')">
       Answer options are required
     </mat-error>
-  </div>
-
-  <div *ngIf="form.controls.options.valid">
-    <label id="answer" class="mat-headline-5">Select an answer:</label>
-    <mat-radio-group
-      aria-labelledby="answer"
-      class="radio-group-container"
-      formControlName="answerOptionIdx"
-    >
-      <mat-radio-button
-        *ngFor="let option of form.value.options; index as i"
-        [value]="i"
-      >
-        {{ option }}
-      </mat-radio-button>
-    </mat-radio-group>
   </div>
 
   <app-form-options></app-form-options>

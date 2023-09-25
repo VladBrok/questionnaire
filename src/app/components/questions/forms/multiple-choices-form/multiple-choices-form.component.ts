@@ -1,17 +1,11 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionService } from '../../../../core/services/question-service/question.service';
 import { MultipleChoicesQuestion } from '../../../../core/models/MultipleChoicesQuestion';
 import { Router } from '@angular/router';
 import { QuestionPatch } from '../../../../core/models/QuestionPatch';
 import { QuestionForm } from '../../../../core/models/QuestionForm';
+import { duplicateQuestionValidator } from '../../../../core/validators/duplicate-question-validator';
 
 @Component({
   selector: 'app-multiple-choices-form',
@@ -21,8 +15,10 @@ import { QuestionForm } from '../../../../core/models/QuestionForm';
 export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
   private fb = inject(FormBuilder);
   form = this.fb.group({
-    questionText: [null, Validators.compose([Validators.required])],
-    answers: this.fb.array([], Validators.compose([this.answersValidator()])),
+    questionText: [
+      null,
+      Validators.compose([Validators.required, duplicateQuestionValidator()]),
+    ],
     options: this.fb.array(
       [],
       Validators.compose([
@@ -63,38 +59,26 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
       questionText: question.text as any,
     });
     for (let i = 0; i < question.options.length; i++) {
-      this.addOption(question.options[i], question.answers[i]);
+      this.addOption(question.options[i]);
     }
-  }
-
-  answersValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const isSomeSelected = control.value.some((x: boolean) => x);
-      return isSomeSelected ? null : { answerNotSelected: true };
-    };
   }
 
   private get options() {
     return this.form.get('options') as FormArray;
   }
 
-  private get answers() {
-    return this.form.get('answers') as FormArray;
-  }
-
-  addOption(option?: string, answer?: boolean): void {
+  addOption(option?: string): void {
     this.options.push(this.fb.control(option || '', Validators.required));
-    this.answers.push(this.fb.control(answer || false));
   }
 
   deleteOption(index: number): void {
     this.options.removeAt(index);
-    this.answers.removeAt(index);
   }
 
   onSubmit(): void {
     this.isShowErrors = true;
 
+    this.form.markAllAsTouched();
     if (!this.form.valid) {
       return;
     }
@@ -103,7 +87,6 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
       text: this.form.value.questionText || '',
       type: 'MULTIPLE_CHOICES',
       options: (this.form.value.options as string[]) || [],
-      answers: (this.form.value.answers as boolean[]) || [],
     };
 
     if (this.id == null) {

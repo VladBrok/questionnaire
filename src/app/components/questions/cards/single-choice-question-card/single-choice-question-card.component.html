@@ -25,7 +25,7 @@
       </button>
     </mat-card-actions>
     <ng-template #unanswered>
-      <mat-card-actions *ngIf="isAnswerValid">
+      <mat-card-actions *ngIf="answerIdx != null">
         <button mat-raised-button color="primary" (click)="onAnswer()">
           Answer
         </button>
