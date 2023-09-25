@@ -5,6 +5,7 @@ import { SingleChoiceQuestion } from '../../../../core/models/SingleChoiceQuesti
 import { Router } from '@angular/router';
 import { QuestionPatch } from '../../../../core/models/QuestionPatch';
 import { QuestionForm } from '../../../../core/models/QuestionForm';
+import { duplicateQuestionValidator } from '../../../../core/validators/duplicate-question-validator';
 
 @Component({
   selector: 'app-single-choice-question-form',
@@ -14,7 +15,10 @@ import { QuestionForm } from '../../../../core/models/QuestionForm';
 export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
   private fb = inject(FormBuilder);
   form = this.fb.group({
-    questionText: [null, Validators.compose([Validators.required])],
+    questionText: [
+      null,
+      Validators.compose([Validators.required, duplicateQuestionValidator()]),
+    ],
     options: this.fb.array(
       [],
       Validators.compose([
