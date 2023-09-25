@@ -1,4 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <!-- TODO: extract and reuse in other forms -->
   <mat-form-field>
     <input
       matInput
@@ -8,6 +9,9 @@
     />
     <mat-error *ngIf="form.controls.questionText.hasError('required')">
       Question text is required
+    </mat-error>
+    <mat-error *ngIf="form.controls.questionText.hasError('duplicateQuestion')">
+      Same question already exists
     </mat-error>
   </mat-form-field>
 

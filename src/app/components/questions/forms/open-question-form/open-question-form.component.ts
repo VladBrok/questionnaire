@@ -5,6 +5,7 @@ import { OpenQuestion } from '../../../../core/models/OpenQuestion';
 import { Router } from '@angular/router';
 import { QuestionPatch } from '../../../../core/models/QuestionPatch';
 import { QuestionForm } from '../../../../core/models/QuestionForm';
+import { duplicateQuestionValidator } from '../../../../core/validators/duplicate-question-validator';
 
 @Component({
   selector: 'app-open-question-form',
@@ -14,7 +15,10 @@ import { QuestionForm } from '../../../../core/models/QuestionForm';
 export class OpenQuestionFormComponent implements QuestionForm, OnInit {
   private fb = inject(FormBuilder);
   form = this.fb.group({
-    questionText: [null, Validators.compose([Validators.required])],
+    questionText: [
+      null,
+      Validators.compose([Validators.required, duplicateQuestionValidator()]),
+    ],
   });
 
   @Input() id?: number;
