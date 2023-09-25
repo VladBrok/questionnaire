@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionService } from '../../../../core/services/question-service/question.service';
 import { MultipleChoicesQuestion } from '../../../../core/models/MultipleChoicesQuestion';
 import { Router } from '@angular/router';
@@ -78,6 +78,7 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
   onSubmit(): void {
     this.isShowErrors = true;
 
+    this.form.markAllAsTouched();
     if (!this.form.valid) {
       return;
     }

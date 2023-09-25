@@ -52,6 +52,7 @@ export class OpenQuestionFormComponent implements QuestionForm, OnInit {
   }
 
   onSubmit(): void {
+    this.form.markAllAsTouched();
     if (!this.form.valid) {
       return;
     }

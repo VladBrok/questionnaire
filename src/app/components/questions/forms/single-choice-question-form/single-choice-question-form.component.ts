@@ -77,6 +77,7 @@ export class SingleChoiceQuestionFormComponent implements OnInit, QuestionForm {
 
   onSubmit(): void {
     this.isShowErrors = true;
+    this.form.markAllAsTouched();
 
     if (!this.form.valid) {
       return;
