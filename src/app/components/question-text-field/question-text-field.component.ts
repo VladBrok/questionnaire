@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,12 +6,6 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './question-text-field.component.html',
   styleUrls: ['./question-text-field.component.scss'],
 })
-export class QuestionTextFieldComponent implements OnChanges {
+export class QuestionTextFieldComponent {
   @Input() form!: FormGroup<any>;
-
-  constructor(private ref: ChangeDetectorRef) {}
-
-  ngOnChanges() {
-    this.ref.detectChanges();
-  }
 }

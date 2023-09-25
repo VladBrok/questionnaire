@@ -1,12 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { QuestionService } from '../../../../core/services/question-service/question.service';
 import { MultipleChoicesQuestion } from '../../../../core/models/MultipleChoicesQuestion';
 import { Router } from '@angular/router';
