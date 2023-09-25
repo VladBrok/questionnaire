@@ -22,7 +22,6 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
   private fb = inject(FormBuilder);
   form = this.fb.group({
     questionText: [null, Validators.compose([Validators.required])],
-    answers: this.fb.array([], Validators.compose([this.answersValidator()])),
     options: this.fb.array(
       [],
       Validators.compose([
@@ -63,33 +62,20 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
       questionText: question.text as any,
     });
     for (let i = 0; i < question.options.length; i++) {
-      this.addOption(question.options[i], question.answers[i]);
+      this.addOption(question.options[i]);
     }
-  }
-
-  answersValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const isSomeSelected = control.value.some((x: boolean) => x);
-      return isSomeSelected ? null : { answerNotSelected: true };
-    };
   }
 
   private get options() {
     return this.form.get('options') as FormArray;
   }
 
-  private get answers() {
-    return this.form.get('answers') as FormArray;
-  }
-
-  addOption(option?: string, answer?: boolean): void {
+  addOption(option?: string): void {
     this.options.push(this.fb.control(option || '', Validators.required));
-    this.answers.push(this.fb.control(answer || false));
   }
 
   deleteOption(index: number): void {
     this.options.removeAt(index);
-    this.answers.removeAt(index);
   }
 
   onSubmit(): void {
@@ -103,7 +89,6 @@ export class MultipleChoicesFormComponent implements QuestionForm, OnInit {
       text: this.form.value.questionText || '',
       type: 'MULTIPLE_CHOICES',
       options: (this.form.value.options as string[]) || [],
-      answers: (this.form.value.answers as boolean[]) || [],
     };
 
     if (this.id == null) {

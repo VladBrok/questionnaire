@@ -57,23 +57,5 @@
     </mat-error>
   </div>
 
-  <div *ngIf="form.controls.options.valid">
-    <p class="mat-headline-5">Select answers:</p>
-    <div
-      formArrayName="answers"
-      *ngFor="let answerIdx of form.controls.answers.controls; index as i"
-    >
-      <mat-checkbox [formControlName]="i">
-        {{ form.value.options?.[i] }}
-      </mat-checkbox>
-    </div>
-
-    <div *ngIf="isShowErrors" class="option-errors">
-      <mat-error *ngIf="form.controls.answers.hasError('answerNotSelected')">
-        At least one answer should be selected
-      </mat-error>
-    </div>
-  </div>
-
   <app-form-options></app-form-options>
 </form>
