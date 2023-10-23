@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { QuestionService } from '../../../../core/services/question-service/question.service';
 import { SingleChoiceQuestion } from '../../../../core/models/SingleChoiceQuestion';
