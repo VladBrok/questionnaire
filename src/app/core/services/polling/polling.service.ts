@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, interval } from 'rxjs';
 
-const POLL_INTERVAL_MS = 3000;
+const POLL_INTERVAL_MS = 10000;
 @Injectable({
   providedIn: 'root',
 })
@@ -45,12 +45,11 @@ export class PollingService {
       document.addEventListener('visibilitychange', handleVisibilityChange);
       window.addEventListener('online', handleOnline);
       window.addEventListener('offline', handleOffline);
-      const intervalId = setInterval(poll, POLL_INTERVAL_MS);
+      subscription.add(interval(POLL_INTERVAL_MS).subscribe(poll));
       poll();
 
       return () => {
         subscription.unsubscribe();
-        clearInterval(intervalId);
         document.removeEventListener(
           'visibilitychange',
           handleVisibilityChange
