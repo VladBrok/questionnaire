@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription, interval } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 
 const POLL_INTERVAL_MS = 10000;
 @Injectable({
@@ -9,47 +9,50 @@ export class PollingService {
   startPolling<T>(getObservable: () => Observable<T>): Observable<T> {
     return new Observable((sub) => {
       const subscription = new Subscription();
+      let timerSubscription: Subscription | null = null;
       let hasInternetConnection = true;
-      let inactiveStart: Date | null = null;
+      let isTabActive = true;
+      let lastPoll: Date | null = null;
 
-      const handleVisibilityChange = () => {
-        if (document.hidden) {
-          inactiveStart = new Date();
-        } else {
-          if (
-            inactiveStart &&
-            new Date().getTime() - inactiveStart.getTime() > POLL_INTERVAL_MS
-          ) {
-            inactiveStart = null;
-            poll();
-          }
-          inactiveStart = null;
+      const checkLastPoll = () => {
+        if (
+          lastPoll &&
+          new Date().getTime() - lastPoll.getTime() > POLL_INTERVAL_MS
+        ) {
+          timerSubscription?.unsubscribe();
+          timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
         }
+      };
+      const handleVisibilityChange = () => {
+        isTabActive = !document.hidden;
+        if (isTabActive) checkLastPoll();
       };
       const handleOnline = () => {
         hasInternetConnection = true;
+        checkLastPoll();
       };
       const handleOffline = () => {
         hasInternetConnection = false;
       };
       const poll = () => {
-        if (inactiveStart || !hasInternetConnection) return;
+        if (!isTabActive || !hasInternetConnection) return;
         subscription.add(
           getObservable().subscribe({
             next: sub.next.bind(sub),
             error: sub.error.bind(sub),
           })
         );
+        lastPoll = new Date();
       };
 
       document.addEventListener('visibilitychange', handleVisibilityChange);
       window.addEventListener('online', handleOnline);
       window.addEventListener('offline', handleOffline);
-      subscription.add(interval(POLL_INTERVAL_MS).subscribe(poll));
-      poll();
+      timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
 
       return () => {
         subscription.unsubscribe();
+        timerSubscription?.unsubscribe();
         document.removeEventListener(
           'visibilitychange',
           handleVisibilityChange
