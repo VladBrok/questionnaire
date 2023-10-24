@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { QuestionCard } from '../../../../core/models/QuestionCard';
 import { SingleChoiceQuestion } from '../../../../core/models/SingleChoiceQuestion';
 import { QuestionService } from '../../../../core/services/question-service/question.service';
