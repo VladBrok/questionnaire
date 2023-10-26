@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription, timer } from 'rxjs';
+import { Observable, Subscription, fromEvent, timer } from 'rxjs';
 
 const POLL_INTERVAL_MS = 10000;
 @Injectable({
@@ -23,7 +23,7 @@ export class PollingService {
           timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
         }
       };
-      const handleVisibilityChange = () => {
+      const handleVisibleChange = () => {
         isTabActive = !document.hidden;
         if (isTabActive) checkLastPoll();
       };
@@ -45,20 +45,16 @@ export class PollingService {
         lastPoll = new Date();
       };
 
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-      window.addEventListener('online', handleOnline);
-      window.addEventListener('offline', handleOffline);
+      subscription.add(
+        fromEvent(document, 'visibilitychange').subscribe(handleVisibleChange)
+      );
+      subscription.add(fromEvent(window, 'online').subscribe(handleOnline));
+      subscription.add(fromEvent(window, 'offline').subscribe(handleOffline));
       timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
 
       return () => {
         subscription.unsubscribe();
         timerSubscription?.unsubscribe();
-        document.removeEventListener(
-          'visibilitychange',
-          handleVisibilityChange
-        );
-        window.removeEventListener('online', handleOnline);
-        window.removeEventListener('offline', handleOffline);
       };
     });
   }
