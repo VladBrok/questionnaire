@@ -1,11 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber, Subscription, fromEvent, timer } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscriber,
+  Subscription,
+  fromEvent,
+  timer,
+} from 'rxjs';
 
 const POLL_INTERVAL_MS = 10000;
 @Injectable({
   providedIn: 'root',
 })
 export class PollingService {
+  private readonly online = new BehaviorSubject(true);
+  private readonly tabActive = new BehaviorSubject(true);
+
+  constructor() {
+    fromEvent(document, 'visibilitychange')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.tabActive.next(!document.hidden);
+      });
+    fromEvent(window, 'online')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.online.next(true);
+      });
+    fromEvent(window, 'offline')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.online.next(false);
+      });
+  }
+
   startPolling<T>(getObservable: () => Observable<T>): Observable<T> {
     return new Observable<T>(this.subscribe.bind(this, getObservable));
   }
@@ -13,8 +42,6 @@ export class PollingService {
   private subscribe<T>(getObservable: () => Observable<T>, sub: Subscriber<T>) {
     const subscription = new Subscription();
     let timerSubscription: Subscription | null = null;
-    let isOnline = true;
-    let isTabActive = true;
     let lastPoll: Date | null = null;
 
     const checkLastPoll = () => {
@@ -26,19 +53,8 @@ export class PollingService {
         timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
       }
     };
-    const handleVisibleChange = () => {
-      isTabActive = !document.hidden;
-      if (isTabActive) checkLastPoll();
-    };
-    const handleOnline = () => {
-      isOnline = true;
-      checkLastPoll();
-    };
-    const handleOffline = () => {
-      isOnline = false;
-    };
     const poll = () => {
-      if (!isTabActive || !isOnline) return;
+      if (!this.tabActive.value || !this.online.value) return;
       subscription.add(
         getObservable().subscribe({
           next: sub.next.bind(sub),
@@ -48,11 +64,8 @@ export class PollingService {
       lastPoll = new Date();
     };
 
-    subscription.add(
-      fromEvent(document, 'visibilitychange').subscribe(handleVisibleChange)
-    );
-    subscription.add(fromEvent(window, 'online').subscribe(handleOnline));
-    subscription.add(fromEvent(window, 'offline').subscribe(handleOffline));
+    subscription.add(this.online.subscribe((val) => val && checkLastPoll()));
+    subscription.add(this.tabActive.subscribe((val) => val && checkLastPoll()));
     timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
 
     return () => {
