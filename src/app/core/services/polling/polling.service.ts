@@ -1,39 +1,13 @@
 import { Injectable } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscriber,
-  Subscription,
-  fromEvent,
-  timer,
-} from 'rxjs';
+import { Observable, Subscriber, Subscription, timer } from 'rxjs';
+import { PresenceService } from '../presence/presence.service';
 
 const POLL_INTERVAL_MS = 10000;
 @Injectable({
   providedIn: 'root',
 })
 export class PollingService {
-  private readonly online = new BehaviorSubject(true);
-  private readonly tabActive = new BehaviorSubject(true);
-
-  constructor() {
-    fromEvent(document, 'visibilitychange')
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => {
-        this.tabActive.next(!document.hidden);
-      });
-    fromEvent(window, 'online')
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => {
-        this.online.next(true);
-      });
-    fromEvent(window, 'offline')
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => {
-        this.online.next(false);
-      });
-  }
+  constructor(private readonly presenceService: PresenceService) {}
 
   startPolling<T>(getObservable: () => Observable<T>): Observable<T> {
     return new Observable<T>(this.subscribe.bind(this, getObservable));
@@ -54,7 +28,7 @@ export class PollingService {
       }
     };
     const poll = () => {
-      if (!this.tabActive.value || !this.online.value) return;
+      if (!this.presenceService.tabActiveAndOnline.value) return;
       subscription.add(
         getObservable().subscribe({
           next: sub.next.bind(sub),
@@ -63,14 +37,18 @@ export class PollingService {
       );
       lastPoll = new Date();
     };
-
-    subscription.add(this.online.subscribe((val) => val && checkLastPoll()));
-    subscription.add(this.tabActive.subscribe((val) => val && checkLastPoll()));
-    timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
-
-    return () => {
+    const teardown = () => {
       subscription.unsubscribe();
       timerSubscription?.unsubscribe();
     };
+
+    subscription.add(
+      this.presenceService.tabActiveAndOnline.subscribe(
+        (val) => val && checkLastPoll()
+      )
+    );
+    timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
+
+    return teardown;
   }
 }
