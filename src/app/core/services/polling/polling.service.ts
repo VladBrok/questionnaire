@@ -1,13 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber, Subscription, timer } from 'rxjs';
-import { PresenceService } from '../presence/presence.service';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscriber,
+  Subscription,
+  fromEvent,
+  timer,
+} from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const POLL_INTERVAL_MS = 10000;
 @Injectable({
   providedIn: 'root',
 })
 export class PollingService {
-  constructor(private readonly presenceService: PresenceService) {}
+  private isTabActive = true;
+  private isOnline = true;
+  readonly tabActiveAndOnline = new BehaviorSubject(true);
+
+  constructor() {
+    fromEvent(document, 'visibilitychange')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.isTabActive = !document.hidden;
+        this.update();
+      });
+    fromEvent(window, 'online')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.isOnline = true;
+        this.update();
+      });
+    fromEvent(window, 'offline')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.isOnline = false;
+        this.update();
+      });
+  }
+
+  private update() {
+    this.tabActiveAndOnline.next(this.isTabActive && this.isOnline);
+  }
 
   startPolling<T>(getObservable: () => Observable<T>): Observable<T> {
     return new Observable<T>(this.subscribe.bind(this, getObservable));
@@ -28,7 +62,7 @@ export class PollingService {
       }
     };
     const poll = () => {
-      if (!this.presenceService.tabActiveAndOnline.value) return;
+      if (!this.tabActiveAndOnline.value) return;
       subscription.add(
         getObservable().subscribe({
           next: sub.next.bind(sub),
@@ -43,9 +77,7 @@ export class PollingService {
     };
 
     subscription.add(
-      this.presenceService.tabActiveAndOnline.subscribe(
-        (val) => val && checkLastPoll()
-      )
+      this.tabActiveAndOnline.subscribe((val) => val && checkLastPoll())
     );
     timerSubscription = timer(0, POLL_INTERVAL_MS).subscribe(poll);
 
