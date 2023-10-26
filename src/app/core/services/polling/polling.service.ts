@@ -10,7 +10,7 @@ export class PollingService {
     return new Observable((sub) => {
       const subscription = new Subscription();
       let timerSubscription: Subscription | null = null;
-      let hasInternetConnection = true;
+      let isOnline = true;
       let isTabActive = true;
       let lastPoll: Date | null = null;
 
@@ -28,14 +28,14 @@ export class PollingService {
         if (isTabActive) checkLastPoll();
       };
       const handleOnline = () => {
-        hasInternetConnection = true;
+        isOnline = true;
         checkLastPoll();
       };
       const handleOffline = () => {
-        hasInternetConnection = false;
+        isOnline = false;
       };
       const poll = () => {
-        if (!isTabActive || !hasInternetConnection) return;
+        if (!isTabActive || !isOnline) return;
         subscription.add(
           getObservable().subscribe({
             next: sub.next.bind(sub),
