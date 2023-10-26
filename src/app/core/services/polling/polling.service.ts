@@ -12,7 +12,6 @@ import {
   timer,
 } from 'rxjs';
 
-const POLL_INTERVAL_MS = 10000;
 @Injectable({
   providedIn: 'root',
 })
@@ -22,41 +21,28 @@ export class PollingService {
     const stop = new Subject<void>();
     let isStopped = false;
     return merge(
-      timer(0, POLL_INTERVAL_MS).pipe(
+      timer(0, 10000).pipe(
         takeUntil(stop),
-        repeat({ delay: () => start })
+        repeat({ delay: () => start }),
+        tap(() => (!navigator.onLine || document.hidden) && stop.next()),
+        filter(() => navigator.onLine && !document.hidden)
       ),
-      fromEvent(document, 'visibilitychange').pipe(
-        filter(() => !document.hidden)
-      ),
-      fromEvent(window, 'online'),
-      start.pipe(
-        tap(() => (isStopped = false)),
+      merge(
+        fromEvent(document, 'visibilitychange').pipe(
+          filter(() => !document.hidden)
+        ),
+        fromEvent(window, 'online')
+      ).pipe(
+        tap(
+          () =>
+            navigator.onLine && !document.hidden && isStopped && start.next()
+        ),
         filter(() => false)
       ),
-      stop.pipe(
-        tap(() => (isStopped = true)),
-        filter(() => false)
-      )
-    ).pipe(
-      tap(
-        (e) =>
-          (!navigator.onLine || document.hidden) &&
-          typeof e === 'number' &&
-          stop.next()
-      ),
-      tap(
-        (e) =>
-          typeof e !== 'number' &&
-          navigator.onLine &&
-          !document.hidden &&
-          isStopped &&
-          start.next()
-      ),
-      filter(
-        (e) => navigator.onLine && !document.hidden && typeof e === 'number'
-      ),
-      switchMap(() => getObservable())
-    );
+      merge(
+        start.pipe(tap(() => (isStopped = false))),
+        stop.pipe(tap(() => (isStopped = true)))
+      ).pipe(filter(() => false))
+    ).pipe(switchMap(getObservable));
   }
 }
