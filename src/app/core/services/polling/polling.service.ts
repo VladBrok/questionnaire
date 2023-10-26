@@ -28,9 +28,7 @@ export class PollingService {
         filter(() => navigator.onLine && !document.hidden)
       ),
       merge(
-        fromEvent(document, 'visibilitychange').pipe(
-          filter(() => !document.hidden)
-        ),
+        fromEvent(document, 'visibilitychange'),
         fromEvent(window, 'online')
       ).pipe(
         tap(
